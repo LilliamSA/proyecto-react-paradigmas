@@ -12,9 +12,12 @@ class PersonaService {
   create(data) {
     return http.post('/persona', data);
   }
+  edit(id) {
+    return http.get(`/persona/${id}`);
+  }
 
   update(id, data) {
-    return http.put(`/persona/${id}`, data);
+    return http.put(`/persona/ ${id}`, data);
   }
 
   delete(id) {

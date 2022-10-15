@@ -1,9 +1,14 @@
 //hacer una tabla con la lista de personas
 import React from 'react';  
+import {Route,Routes} from "react-router-dom";
 import PersonaDataService from '../../services/PersonaService';
+import UpdatePersona from '../../containers/UpdatePersona';
+
+
+
 
 //crear una tabla
-const PersonaList = () => {
+const PersonaList = (props) => {
     const [personas, setPersonas] = React.useState([]);
     const [setCurrentPersona] = React.useState(null);
     const [setCurrentIndex] = React.useState(-1);
@@ -39,9 +44,6 @@ const PersonaList = () => {
             });
         }
     };
-    //metodo que redirija a PersonaUpdate para usar el formulario
-
-
     return(
       //una tabla con los datos de la base de datos
       <div className="container">
@@ -69,16 +71,14 @@ const PersonaList = () => {
                                     <td>{persona.identificacion}</td>
                                     <td>{persona.nombre}</td>
                                     <td>
-                                        <button
-                                            //boton que me dirija al archivo PersonaUpdate.js
-                                            className="btn btn-success"
+                                        <button 
+                                        className='btn btn-primary'
                                             onClick={() => {
-                                                window.location.href = "./PersonaUpdate" + persona.id;
-                                            }}
+                                                window.location.href = `/persona/PersonaUpdate/${persona.id}`;
+                                            }} 
                                         >
                                             Editar
-
-                                        </button>
+                                            </button>
                                     </td>
                                     <td>
                                         <button
