@@ -1,5 +1,5 @@
 import React from "react";
-import PersonaUpdate from "../components/Persona/PersonaUpdate";
+import PersonaUpdate from "../../components/Persona/PersonaUpdate";
 function UpdatePersona () {
     return (
         <div className="container">

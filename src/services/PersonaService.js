@@ -13,7 +13,7 @@ class PersonaService {
     return http.post('/persona', data);
   }
   edit(id) {
-    return http.get(`/persona/${id}`);
+    return http.get(`/persona?id=${id}`);
   }
 
   update(id, data) {

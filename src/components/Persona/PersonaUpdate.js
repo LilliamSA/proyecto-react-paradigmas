@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import PersonaDataService from "../../services/PersonaService";
 
 const PersonaUpdate = (props) => {
+
 //obtener el id de la persona
 const id = props.match.params.id;
-
 const initialPersonaState = {
     id: null,
     identificacion: "",
     nombre: "",
 };
+
+
 const [persona, setPersona] = useState(initialPersonaState);
 const [submitted, setSubmitted] = useState(false);
 //obtener la persona por id
@@ -23,6 +25,8 @@ const getPersona = (id) => {
         console.log(e);
     });
 };
+// traer los datos de la persona en base al id
+
 //actualizar la persona
 const updatePersona = () => {
     PersonaDataService.update(persona.id, persona)

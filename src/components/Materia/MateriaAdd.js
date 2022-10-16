@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import MateriaDataService from "../../services/MateriaService";
+import PeriodoDataService from "../../services/PeriodoService";
+import Select from "react-select";
 
 const MateriaAdd = () => {
-    //agregar una materia relacionandola con el periodo datos: id, cupos, descripcion, id_periodo
+    //agregar una materia que tenga los siguiente datos: id, cupos, descripcion, id_periodo mediante un combo-box relacionandola con la entidad periodo
     const initialMateriaState = {
         id: null,
         cupos: "",
         descripcion: "",
-        id_periodo: "",
+        idPeriodo: "",
     };
     const [materia, setMateria] = useState(initialMateriaState);
     const [submitted, setSubmitted] = useState(false);
     const [periodos, setPeriodos] = useState([]);
-    const [periodo, setPeriodo] = useState(initialMateriaState);
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [options, setOptions] = useState([]);
 
-    //obtener todos los periodos
     React.useEffect(() => {
         retrievePeriodos();
     }, []);
 
-    //obtener todos los periodos
     const retrievePeriodos = () => {
-        MateriaDataService.getAllPeriodos()
+        PeriodoDataService.getAll()
         .then(response => {
             setPeriodos(response.data);
             console.log(response.data);
@@ -33,18 +34,19 @@ const MateriaAdd = () => {
 
     const saveMateria = () => {
         var data = {
-        cupos: materia.cupos,
-        descripcion: materia.descripcion,
-        id_periodo: materia.id_periodo,
+            cupos: materia.cupos,
+            descripcion: materia.descripcion,
+            idPeriodo: materia.idPeriodo,
         };
-    
+
+      //HACER VALIDACIONES incluyendo el combo-box
         MateriaDataService.create(data)
         .then(response => {
             setMateria({
-            id: response.data.id,
-            cupos: response.data.cupos,
-            descripcion: response.data.descripcion,
-            id_periodo: response.data.id_periodo,
+                id: response.data.id,
+                cupos: response.data.cupos,
+                descripcion: response.data.descripcion,
+                idPeriodo: response.data.idPeriodo,
             });
             setSubmitted(true);
             console.log(response.data);
@@ -53,9 +55,15 @@ const MateriaAdd = () => {
             console.log(e);
         });
     };
+
     const home = () => {
-        window.location.href = "/";
+        window.location.href = "/materia/listar";
     }
+
+    const handleChange = (selectedOption) => {
+        setSelectedOption(selectedOption);
+        setMateria({ ...materia, idPeriodo: selectedOption.value });
+    };
 
     return (
         <div className="submit-form">
@@ -90,24 +98,21 @@ const MateriaAdd = () => {
                 value={materia.descripcion}
                 onChange={(e) => setMateria({ ...materia, descripcion: e.target.value })}
                 name="descripcion"
-                />
+                />  
             </div>
             <div className="form-group">
                 <label htmlFor="id_periodo">Periodo</label>
-                <select
-                className="form-control"
-                id="id_periodo"
-                required
-                value={materia.id_periodo}
-                onChange={(e) => setMateria({ ...materia, id_periodo: e.target.value })}
-                name="id_periodo"
-                >
-                {periodos.map((periodo) => (
-                    <option key={periodo.id} value={periodo.id}>
-                    {periodo.descripcion}
-                    </option>
-                ))}
-                </select>
+                <Select
+
+                    value={selectedOption}
+                    onChange={handleChange}
+                    id="id_periodo"
+                    name="id_periodo"
+                    options={periodos.map((periodo) => ({
+                        value: periodo.id,
+                        label: periodo.descripcion,
+                    }))}
+                />
             </div>
             <button onClick={saveMateria} className="btn btn-success">
                 Agregar
@@ -119,13 +124,3 @@ const MateriaAdd = () => {
 };
 
 export default MateriaAdd;
-        
-
-
-
-
-
-
-
-
-
