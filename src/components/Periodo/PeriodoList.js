@@ -47,7 +47,7 @@ const PeriodoList = () => {
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Descripcion</th>
+                                <th>Periodo</th>
                                 <th>Editar</th>
                                 <th>Eliminar</th>
                             </tr>

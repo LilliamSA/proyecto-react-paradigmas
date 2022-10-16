@@ -42,12 +42,12 @@ const NavPrincipal = () => {
 				aria-labelledby="navbarDropdownMenuLink"
 			  >
 				<li>
-				  <Link className="dropdown-item" to="/contact">
+				  <Link className="dropdown-item" to="/matricula/agregar">
 					Matricular
 				  </Link>
 				</li>
 				<li>
-				  <Link className="dropdown-item" to="/about">
+				  <Link className="dropdown-item" to="/matricula/listar">
 					Ver matriculas
 				  </Link>
 				</li>

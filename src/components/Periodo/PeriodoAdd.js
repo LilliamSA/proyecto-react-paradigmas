@@ -44,7 +44,7 @@ const PeriodoAdd = () => {
         ) : (
             <div>
             <div className="form-group">
-                <label htmlFor="nombre">Descripcion</label>
+                <label htmlFor="nombre">Periodo</label>
                 <input
                 type="text"
                 className="form-control"

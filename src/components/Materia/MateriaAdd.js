@@ -4,11 +4,11 @@ import PeriodoDataService from "../../services/PeriodoService";
 import Select from "react-select";
 
 const MateriaAdd = () => {
-    //agregar una materia que tenga los siguiente datos: id, cupos, descripcion, id_periodo mediante un combo-box relacionandola con la entidad periodo
+    //agregar una materia que tenga los siguiente datos: id, cupos, materia, id_periodo mediante un combo-box relacionandola con la entidad periodo
     const initialMateriaState = {
         id: null,
+        asignatura: "",
         cupos: "",
-        descripcion: "",
         idPeriodo: "",
     };
     const [materia, setMateria] = useState(initialMateriaState);
@@ -34,8 +34,8 @@ const MateriaAdd = () => {
 
     const saveMateria = () => {
         var data = {
+            asignatura: materia.asignatura,
             cupos: materia.cupos,
-            descripcion: materia.descripcion,
             idPeriodo: materia.idPeriodo,
         };
 
@@ -43,9 +43,9 @@ const MateriaAdd = () => {
         MateriaDataService.create(data)
         .then(response => {
             setMateria({
+                asignatura: response.data.asignatura,
                 id: response.data.id,
                 cupos: response.data.cupos,
-                descripcion: response.data.descripcion,
                 idPeriodo: response.data.idPeriodo,
             });
             setSubmitted(true);
@@ -77,6 +77,18 @@ const MateriaAdd = () => {
         ) : (
             <div>
             <div className="form-group">
+                <label htmlFor="asignatura">Descripcion</label>
+                <input
+                type="text"
+                className="form-control"
+                id="asignatura"
+                required
+                value={materia.asignatura}
+                onChange={(e) => setMateria({ ...materia, asignatura: e.target.value })}
+                name="asignatura"
+                />  
+            </div>
+            <div className="form-group">
                 <label htmlFor="cupos">Cupos</label>
                 <input
                 type="text"
@@ -87,18 +99,6 @@ const MateriaAdd = () => {
                 onChange={(e) => setMateria({ ...materia, cupos: e.target.value })}
                 name="cupos"
                 />
-            </div>
-            <div className="form-group">
-                <label htmlFor="descripcion">Descripcion</label>
-                <input
-                type="text"
-                className="form-control"
-                id="descripcion"
-                required
-                value={materia.descripcion}
-                onChange={(e) => setMateria({ ...materia, descripcion: e.target.value })}
-                name="descripcion"
-                />  
             </div>
             <div className="form-group">
                 <label htmlFor="id_periodo">Periodo</label>
