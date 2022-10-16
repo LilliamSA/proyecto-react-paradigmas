@@ -133,7 +133,7 @@ const MatriculaAdd = () => {
                             onChange={handleChangeMateria}
                             options={materias.map((materia) => ({
                                 value: materia.id,
-                                label: materia.asignatura,
+                                label: materia.descripcion,
                             }))}
                         />
                     </div>

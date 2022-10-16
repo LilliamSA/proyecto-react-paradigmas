@@ -55,7 +55,7 @@ const MateriaList = () => {
                         {materias.map((materia, index) => (
                             <tr key={index}>
                                 <td>{materia.id}</td>
-                                <td>{materia.asignatura}</td>
+                                <td>{materia.descripcion}</td>
                                 <td>{materia.cupos}</td>
                                 <td>{materia.periodo.descripcion}</td>
             

@@ -61,7 +61,7 @@ const MatriculaAdd = () => {
                             <tr key={index}>
                                 <td>{matricula.id}</td>
                                 <td>{matricula.persona.nombre}</td>
-                                <td>{matricula.materia.asignatura}</td>
+                                <td>{matricula.materia.descripcion}</td>
                                 <td>{matricula.periodo.descripcion}</td>
                                 <td>
                                     <button className="btn btn-danger" onClick={() => deleteMatricula(matricula.id)}>Eliminar</button>

@@ -7,7 +7,7 @@ const MateriaAdd = () => {
     //agregar una materia que tenga los siguiente datos: id, cupos, materia, id_periodo mediante un combo-box relacionandola con la entidad periodo
     const initialMateriaState = {
         id: null,
-        asignatura: "",
+        descripcion: "",
         cupos: "",
         idPeriodo: "",
     };
@@ -34,7 +34,7 @@ const MateriaAdd = () => {
 
     const saveMateria = () => {
         var data = {
-            asignatura: materia.asignatura,
+            descripcion: materia.descripcion,
             cupos: materia.cupos,
             idPeriodo: materia.idPeriodo,
         };
@@ -43,8 +43,8 @@ const MateriaAdd = () => {
         MateriaDataService.create(data)
         .then(response => {
             setMateria({
-                asignatura: response.data.asignatura,
                 id: response.data.id,
+                descripcion: response.data.descripcion,
                 cupos: response.data.cupos,
                 idPeriodo: response.data.idPeriodo,
             });
@@ -77,15 +77,15 @@ const MateriaAdd = () => {
         ) : (
             <div>
             <div className="form-group">
-                <label htmlFor="asignatura">Descripcion</label>
+                <label htmlFor="descripcion">Descripcion</label>
                 <input
                 type="text"
                 className="form-control"
-                id="asignatura"
+                id="descripcion"
                 required
-                value={materia.asignatura}
-                onChange={(e) => setMateria({ ...materia, asignatura: e.target.value })}
-                name="asignatura"
+                value={materia.descripcion}
+                onChange={(e) => setMateria({ ...materia, descripcion: e.target.value })}
+                name="descripcion"
                 />  
             </div>
             <div className="form-group">
