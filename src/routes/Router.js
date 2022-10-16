@@ -7,6 +7,7 @@ import UpdatePersona from "../containers/PersonaContainer/UpdatePersona";
 import AgregarPeriodo from "../containers/PeriodoContainer/AgregarPeriodo";
 import ListarPeriodo from "../containers/PeriodoContainer/ListarPeriodo";
 import AgregarMateria from "../containers/MateriaContainer/AgregarMateria";
+import ListarMateria from "../containers/MateriaContainer/ListarMateria";
 
 
 
@@ -22,7 +23,7 @@ const Router = () => {
             <Route exact path="/periodo/listar" element = {<ListarPeriodo/>}/>
             <Route exact path="/periodo/agregar" element = {<AgregarPeriodo/>}/>
             <Route exact path="/materia/agregar" element = {<AgregarMateria/>}/>
-            <Route exact path="/persona" element = {<UpdatePersona/>}/>
+            <Route exact path="/materia/listar" element = {<ListarMateria/>}/>
       
         </Routes>
 

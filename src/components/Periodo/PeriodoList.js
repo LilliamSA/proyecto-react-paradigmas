@@ -1,7 +1,7 @@
 import React from 'react';  
 import PeriodoDataService from "../../services/PeriodoService";
 
-const PeriodoAdd = () => {
+const PeriodoList = () => {
 
     const [periodos, setPeriodos] = React.useState([]);
 
@@ -73,6 +73,6 @@ const PeriodoAdd = () => {
     )
 }
 
-export default PeriodoAdd;
+export default PeriodoList;
 
 
