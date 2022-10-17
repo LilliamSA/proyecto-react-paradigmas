@@ -47,8 +47,9 @@ const MateriaList = () => {
                             <th>Asignatura</th>
                             <th>Cupos</th>
                             <th>Periodo</th>
-                            <th>Eliminar</th>
                             <th>Editar</th>
+                            <th>Eliminar</th>
+                          
                         </tr>
                     </thead>
                     <tbody>

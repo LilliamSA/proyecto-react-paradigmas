@@ -51,8 +51,9 @@ const MatriculaAdd = () => {
                             <th>Estudiante</th>
                             <th>Materia</th>
                             <th>Periodo</th>
-                            <th>Eliminar</th>
                             <th>Editar</th>
+                            <th>Eliminar</th>
+                          
 
                         </tr>
                     </thead>
@@ -64,11 +65,12 @@ const MatriculaAdd = () => {
                                 <td>{matricula.materia.descripcion}</td>
                                 <td>{matricula.periodo.descripcion}</td>
                                 <td>
-                                    <button className="btn btn-danger" onClick={() => deleteMatricula(matricula.id)}>Eliminar</button>
-                                </td>
-                                <td>
                                     <button className="btn btn-primary">Editar</button>
                                 </td>
+                                <td>
+                                    <button className="btn btn-danger" onClick={() => deleteMatricula(matricula.id)}>Eliminar</button>
+                                </td>
+                               
                             </tr>
                         ))}
                     </tbody>

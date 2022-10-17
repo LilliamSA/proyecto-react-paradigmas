@@ -31,6 +31,15 @@ class MateriaService {
     findByTitle(title) {
         return http.get(`/materia?title=${title}`);
     }
+
+   findAllByPeriodoId(idPeriodo) {
+        return http.get(`/materia/periodo/${idPeriodo}`);
     }
+
+    findCuposById(id) {
+        return http.get(`/materia/cupos/${id}`);
+    }
+
+}
 
 export default new MateriaService();
