@@ -14,8 +14,8 @@ const MateriaUpdate = () => {
 
     const [materia, setMateria] = useState({}); //persona es el nombre de la variable y setPersona es el nombre de la funcion
     const [submitted, setSubmitted] = useState(false);//submitted es el nombre de la variable y setSubmitted es el nombre de la funcion
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [setError] = useState(null);
+    const [setIsLoaded] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [cupos, setCupos] = useState(""); //que se actualice el valor de la identificacion
     const [descripcion, setDescripcion] = useState(""); //que se actualice el valor de la identificacion
@@ -87,16 +87,7 @@ const MateriaUpdate = () => {
 const home = () => {
     window.location.href = "/materia/listar";
 }
-    const handleInputChange = event => {
-        const {name, value} = event.target;
-        setMateria({...materia, [name]: value});
-    };
-
-    const handleInputChangePeriodo = event => {
-        const {value} = event.target;
-        setIdPeriodo(value);
-    };
-
+  
     const handleInputChangeCupos = event => {
         const {value} = event.target;
         setCupos(value);
@@ -110,11 +101,6 @@ const home = () => {
     const handleInputChangeIdMateria = event => {
         const {value} = event.target;
         setIdMateria(value);
-    };
-
-    const handleInputChangeIdPeriodo = event => {
-        const {value} = event.target;
-        setIdPeriodo(value);
     };
 
     const handleChange = (selectedOption) => {

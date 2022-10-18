@@ -21,8 +21,6 @@ const MatriculaAdd = () => {
     const [selectedOptionPeriodo, setSelectedOptionPeriodo] = useState(null);
     const [selectedOptionMateria, setSelectedOptionMateria] = useState(null);
     const [selectedOptionPersona, setSelectedOptionPersona] = useState(null);
-
-    const [options, setOptions] = useState([]);
     const [materias, setMaterias] = useState([]);
     const [personas, setPersonas] = useState([]);
 
@@ -81,16 +79,6 @@ const MatriculaAdd = () => {
 
     const home = () => {
         window.location.href = "/matricula/listar";
-    };
-
-    const newMatricula = () => {
-        setMatricula(initialMatriculaState);
-        setSubmitted(false);
-    };
-
-    const handleInputChange = event => {
-        const { name, value } = event.target;
-        setMatricula({ ...matricula, [name]: value });
     };
 
     const handleSelectChange = (selectedOptionPeriodo) => {

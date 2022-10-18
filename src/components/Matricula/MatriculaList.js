@@ -1,5 +1,6 @@
 import MatriculaDataService from "../../services/MatriculaService";
 import React from 'react';  
+import { Link } from 'react-router-dom';
 
 const MatriculaAdd = () => {
 
@@ -65,7 +66,7 @@ const MatriculaAdd = () => {
                                 <td>{matricula.materia.descripcion}</td>
                                 <td>{matricula.periodo.descripcion}</td>
                                 <td>
-                                    <button className="btn btn-primary">Editar</button>
+                                <Link to={"/matricula/editar/" + matricula.id} className="btn btn-success"> Editar </Link>
                                 </td>
                                 <td>
                                     <button className="btn btn-danger" onClick={() => deleteMatricula(matricula.id)}>Eliminar</button>
