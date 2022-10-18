@@ -31,7 +31,11 @@ class PeriodoService {
     findByTitle(title) {
         return http.get(`/periodo?title=${title}`);
     }
+
+    findById(id) {
+        return http.get(`/periodo?id=${id}`);
     }
+}
 
 
 export default new PeriodoService();

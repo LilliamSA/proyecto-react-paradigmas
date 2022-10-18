@@ -1,6 +1,6 @@
 import React from 'react';  
 import PeriodoDataService from "../../services/PeriodoService";
-
+import { Link } from 'react-router-dom';
 const PeriodoList = () => {
 
     const [periodos, setPeriodos] = React.useState([]);
@@ -58,7 +58,7 @@ const PeriodoList = () => {
                                     <td>{periodo.id}</td>
                                     <td>{periodo.descripcion}</td>
                                     <td>
-                                        <button className="btn btn-primary">Editar</button>
+                                    <Link to={"/periodo/editar/" + periodo.id} className="btn btn-success"> Editar </Link>
                                     </td>
                                     <td>
                                         <button className="btn btn-danger" onClick={() => deletePeriodo(periodo.id)}>Eliminar</button>
