@@ -61,28 +61,50 @@
         const home = () => {
             window.location.href = "/persona/listar";
         }
+        
+
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-12">
-                        <h4>Actualizar persona</h4>
-                        <hr/>
-                        <form onSubmit={useEffect}> 
-                            <div className="form-group">
-                                <label htmlFor="identificacion">Identificacion</label>
-                                <input type="text" className="form-control" id="identificacion" required value={identificacion} onChange={e => setIdentificacion(e.target.value)} name="identificacion"/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="nombre">Nombre</label>
-                                <input type="text" className="form-control" id="nombre" required value={nombre} onChange={e => setNombre(e.target.value)} name="nombre"/>
-                            </div>
-                            <button onClick={updatePersona} className="btn btn-success">Actualizar</button>
-                            <button onClick={home} className="btn btn-danger">Cancelar</button>
-                        </form>
-                    </div>
+            <div className="submit-form">
+            {submitted ? (
+                <div>
+                <h4>Persona actualizada correctamente!</h4>
+                <button className="btn btn-success" onClick={home}>
+                    Volver
+                </button>
                 </div>
+            ) : (
+                <div>
+                <div className="form-group">
+                    <label htmlFor="identificacion">Identificacion</label>
+                    <input
+                    type="text"
+                    className="form-control"
+                    id="identificacion"
+                    required
+                    value={identificacion}
+                    onChange={(e) => setIdentificacion(e.target.value)} 
+                    name="identificacion"
+
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="nombre">Nombre</label>
+                    <input
+                    type="text"
+                    className="form-control"
+                    id="nombre"
+                    required
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
+                    name="nombre"
+                    />  
+                </div>
+                <button onClick={updatePersona} className="btn btn-success">
+                    Actualizar
+                </button>
+                </div>
+            )}
             </div>
         );
     }
-
-export default PersonaUpdate;
+    export default PersonaUpdate;
