@@ -105,9 +105,6 @@ const NavPrincipal = () => {
 					<Link className="dropdown-item" to="/persona/listar">
 					Listar personas
 					</Link>
-					<Link className="dropdown-item" to="/persona/editar">
-					Actualizar
-					</Link>
 				</ul>
 				</li>
 			  </ul>
