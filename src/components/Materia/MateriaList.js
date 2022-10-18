@@ -1,6 +1,6 @@
 import MateriaDataService from "../../services/MateriaService";
 import React from 'react';  
-
+import { Link } from 'react-router-dom';
 const MateriaList = () => {
     const [materias, setMaterias] = React.useState([]);
     const [currentMateria, setCurrentMateria] = React.useState(null);
@@ -61,7 +61,7 @@ const MateriaList = () => {
                                 <td>{materia.periodo.descripcion}</td>
             
                                 <td>
-                                    <button className="btn btn-primary">Editar</button>
+                                <Link to={"/materia/editar/" + materia.id} className="btn btn-success"> Editar </Link>
                                 </td>
                                 <td>
                                 <button className="btn btn-danger" onClick={() => deleteMateria(materia.id)}>Eliminar</button>

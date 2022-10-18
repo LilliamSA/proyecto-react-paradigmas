@@ -40,6 +40,10 @@ class MateriaService {
         return http.get(`/materia/cupos/${id}`);
     }
 
+    findById(id) {
+        return http.get(`/materia/${id}`);
+    }
+
 }
 
 export default new MateriaService();
