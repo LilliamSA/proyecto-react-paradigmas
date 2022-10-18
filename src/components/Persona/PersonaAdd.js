@@ -4,7 +4,7 @@ import PersonaDataService from "../../services/PersonaService";
 //metodos para agregar una persona
 const PersonaAdd = (props) => {
     const initialPersonaState = {
-        id: props.match.params.id,
+        id: null,
         identificacion: "",
         nombre: "",
     };
@@ -33,7 +33,7 @@ const PersonaAdd = (props) => {
         });
     };
     const home = () => {
-        window.location.href = "/";
+        window.location.href = "/persona/listar";
     }
 
     return (
