@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import PersonaDataService from "../../services/PersonaService";
 
 //metodos para agregar una persona
-const PersonaAdd = () => {
+const PersonaAdd = (props) => {
     const initialPersonaState = {
-        id: null,
+        id: props.match.params.id,
         identificacion: "",
         nombre: "",
     };
@@ -13,6 +13,7 @@ const PersonaAdd = () => {
      
     const savePersona = () => {
         var data = {
+            
         identificacion: persona.identificacion,
         nombre: persona.nombre,
         };
@@ -64,6 +65,7 @@ const PersonaAdd = () => {
                 type="text"
                 className="form-control"
                 id="nombre"
+                //validar que el campo es requerido que sea string
                 required
                 value={persona.nombre}
                 onChange={(e) => setPersona({ ...persona, nombre: e.target.value })}

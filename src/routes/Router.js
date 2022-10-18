@@ -4,6 +4,7 @@ import NavPrincipal from "../menu/NavPrincipal";
 import ListarPersona from "../containers/PersonaContainer/ListarPersona";
 import AgregarPersona from "../containers/PersonaContainer/AgregarPersona";
 import AgregarPeriodo from "../containers/PeriodoContainer/AgregarPeriodo";
+import UpdatePersona from "../containers/PersonaContainer/UpdatePersona";
 import ListarPeriodo from "../containers/PeriodoContainer/ListarPeriodo";
 import AgregarMateria from "../containers/MateriaContainer/AgregarMateria";
 import ListarMateria from "../containers/MateriaContainer/ListarMateria";
@@ -27,6 +28,7 @@ const Router = () => {
             <Route exact path="/materia/listar" element = {<ListarMateria/>}/>
             <Route exact path="/matricula/listar" element = {<ListarMatricula/>}/>
             <Route exact path="/matricula/agregar" element = {<AgregarMatricula/>}/>
+            <Route exact path="/persona/editar/:id" element = {<UpdatePersona/>}/>
       
         </Routes>
 

@@ -31,6 +31,10 @@ class PersonaService {
   findByTitle(title) {
     return http.get(`/persona?title=${title}`);
   }
+
+  findById(id) {
+    return http.get(`/persona?id=${id}`);
+  }
 }
 
 export default new PersonaService();
