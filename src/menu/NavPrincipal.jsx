@@ -62,7 +62,7 @@ const NavPrincipal = () => {
 				data-bs-toggle="dropdown"
 				aria-expanded="false"
 			  >
-				Gestion Admistrativa
+				Gestion Administrativa
 			  </a>
 			  <ul
 				className="dropdown-menu"
@@ -106,6 +106,28 @@ const NavPrincipal = () => {
 					Listar personas
 					</Link>
 				</ul>
+				</li>
+			  </ul>
+			</div>
+			<div className="nav-item dropdown">
+			  <a
+				className="nav-link dropdown-toggle"
+				href="#"
+				id="navbarDropdownMenuLink"
+				role="button"
+				data-bs-toggle="dropdown"
+				aria-expanded="false"
+			  >
+				Administración de la Base de Datos
+			  </a>
+			  <ul
+				className="dropdown-menu"
+				aria-labelledby="navbarDropdownMenuLink"
+			  >
+				<li>
+				  <Link className="dropdown-item" to="/log/listar">
+					Ver logs
+				  </Link>
 				</li>
 			  </ul>
 			</div>

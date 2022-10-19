@@ -13,6 +13,7 @@ import UpdateMateria from "../containers/MateriaContainer/UpdateMateria";
 import ListarMatricula from "../containers/MatriculaContainer/ListarMatricula";
 import AgregarMatricula from "../containers/MatriculaContainer/AgregarMatricula";
 import UpdateMatricula from "../containers/MatriculaContainer/UpdateMatricula";
+import ListarLog from "../containers/LogContainer/ListarLog";
 
 
 
@@ -35,6 +36,7 @@ const Router = () => {
             <Route exact path="/matricula/listar" element = {<ListarMatricula/>}/>
             <Route exact path="/matricula/agregar" element = {<AgregarMatricula/>}/>
             <Route exact path="/matricula/editar/:id" element = {<UpdateMatricula/>}/>
+            <Route exact path="/log/listar" element = {<ListarLog/>}/>
           
       
         </Routes>

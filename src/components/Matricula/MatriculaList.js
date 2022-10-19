@@ -6,9 +6,7 @@ const MatriculaAdd = () => {
 
     //metodo para listar y una tabla
     const [matriculas, setMatriculas] = React.useState([]);
-    const [currentMatricula, setCurrentMatricula] = React.useState(null);
-    const [currentIndex, setCurrentIndex] = React.useState(-1);
-    const [searchTitle, setSearchTitle] = React.useState("");
+
 
 
     React.useEffect(() => {
