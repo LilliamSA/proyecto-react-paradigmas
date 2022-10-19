@@ -41,7 +41,7 @@ class MateriaService {
     }
 
     findById(id) {
-        return http.get(`/materia/${id}`);
+        return http.get(`/materia?id=${id}`);
     }
 
 }
