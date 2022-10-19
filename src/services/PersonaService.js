@@ -33,7 +33,7 @@ class PersonaService {
   }
 
   findById(id) {
-    return http.get(`/persona?id=${id}`);
+    return http.get(`/persona/${id}`);
   }
 }
 

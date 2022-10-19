@@ -75,7 +75,7 @@ import Select from "react-select";
         }, []);
 
         const retrievePeriodos = () => {
-            PeriodoDataService.getAll()
+            PeriodoDataService.findByI()
             .then(response => {
                 setPeriodos(response.data);
                 console.log(response.data);
@@ -92,7 +92,7 @@ import Select from "react-select";
         }, []);
 
         const retrieveMaterias = () => {
-            MateriaDataService.getAll()
+            MateriaDataService.findById()
             .then(response => {
                 setMaterias(response.data);
                 console.log(response.data);
@@ -109,7 +109,7 @@ import Select from "react-select";
         }, []);
 
         const retrievePersonas = () => {
-            PersonaDataService.getAll()
+            PersonaDataService.findById()
             .then(response => {
                 setPersonas(response.data);
                 console.log(response.data);

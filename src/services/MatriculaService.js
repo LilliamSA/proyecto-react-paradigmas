@@ -31,6 +31,6 @@ class MatriculaService {
     findByTitle(title) {
         return http.get(`/matricula?title=${title}`);
     }
-    }
+}
 
 export default new MatriculaService();

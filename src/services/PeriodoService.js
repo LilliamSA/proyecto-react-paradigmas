@@ -33,7 +33,7 @@ class PeriodoService {
     }
 
     findById(id) {
-        return http.get(`/periodo?id=${id}`);
+        return http.get(`/periodo/${id}`);
     }
 }
 
