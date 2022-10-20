@@ -84,7 +84,7 @@ const MateriaUpdate = () => {
 
     const handleChange = (selectedOption) => {
         setSelectedOption(selectedOption);
-        setIdPeriodo({ id: selectedOption.value, descripcion: selectedOption.label });
+        setIdPeriodo({ id: selectedOption.value});
     }
 
     return (
