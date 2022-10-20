@@ -5,7 +5,7 @@
  import {useParams} from "react-router-dom";
  import Select from "react-select";
 
- const PersonaUpdate = () => {
+ const MateriaUpdate = () => {
 
         const {id} = useParams();
         const URL = "http://localhost:8080/materia/"+id; 
@@ -31,15 +31,14 @@
                     setIdMateria(result.idMateria);
                     setCupos(result.cupos);
                     setDescripcion(result.descripcion);
-                    setIdPeriodo(result.idPeriodo);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
+                    setIdPeriodo(result.periodo.descripcion);
+                })
+                .catch(result => {
+                    console.log(result);
+                })
         }, [URL]);
-      
+            
+
         const updateMateria = () => {
             var data = {
                 id: idMateria,
@@ -124,17 +123,16 @@
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="idP" >Periodo Actual</label>
-                            <select
+                            <label htmlFor="idperiodo">Periodo Actual</label>
+                            <input
                                 className="form-control"
-                                id="idP"
+                                id="idperiodo"
                                 disabled
                                 value={idPeriodo}
                                 onChange={(e) => setIdPeriodo(e.target.value)}
-                                name="idP"
+                                name="idperiodo"
                             >
-                                <option value={idPeriodo}>{idPeriodo}</option>
-                            </select>
+                            </input>
                         </div>
                         <div className="form-group">
                                     <label htmlFor="idPeriodo">Periodo</label>
@@ -160,4 +158,4 @@
 
 
 
-    export default PersonaUpdate;
+    export default MateriaUpdate;
