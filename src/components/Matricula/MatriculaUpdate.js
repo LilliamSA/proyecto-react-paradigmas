@@ -12,43 +12,44 @@ import Select from "react-select";
         const {id} = useParams();
         const URL = "http://localhost:8080/matricula/"+id;
 
-        const [matricula, setMatricula] = useState({}); //matricula es el nombre de la variable y setMatricula es el nombre de la funcion
-        const [submitted, setSubmitted] = useState(false);//submitted es el nombre de la variable y setSubmitted es el nombre de la funcion
-        const [setError] = useState(null);
-        const [setIsLoaded] = useState(false);
-        const [idPeriodo, setIdPeriodo] = useState(""); //que se actualice el valor de la identificacion
-        const [idMateria, setIdMateria] = useState(""); //que se actualice el valor del idMateria
-        const [idPersona, setIdPersona] = useState(""); //que se actualice el valor del idPersona
-        const [periodos, setPeriodos] = useState([]);
-        const [materias, setMaterias] = useState([]);
-        const [personas, setPersonas] = useState([]);
         const [selectedOptionPeriodo, setSelectedOptionPeriodo] = useState(null);
         const [selectedOptionPersona, setSelectedOptionPersona] = useState(null);
         const [selectedOptionMateria, setSelectedOptionMateria] = useState(null);
-
+        const [matricula, setMatricula] = useState({});
+        const [periodos, setPeriodos] = useState([]);
+        const [materias, setMaterias] = useState([]);
+        const [personas, setPersonas] = useState([]);
+        const [submitted, setSubmitted] = useState(false);//submitted es el nombre de la variable y setSubmitted es el nombre de la funcion
+        const [error, setError] = useState(null);
+        const [isLoaded, setIsLoaded] = useState(false);
+        const [idMateria, setIdMateria] = useState(""); //que se actualice el valor del idPersona
+        const [idPeriodo, setIdPeriodo] = useState(""); //que se actualice el valor del idPersona
+        const [idPersona, setIdPersona] = useState(""); //que se actualice el valor del idPersona
+    
         useEffect(() => {
             fetch(URL)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setMatricula(result);
-                    setIdPeriodo(result.idPeriodo);
-                    setIdMateria(result.idMateria);
-                    setIdPersona(result.idPersona);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
-        }, [URL]);  
-
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        console.log("RESULT:", result);
+                        setIsLoaded(true);
+                        setMatricula(result);
+                        setIdPeriodo(result.periodo);
+                        setIdMateria(result.materia);
+                        setIdPersona(result.persona);
+                        
+                    })
+                .catch(result => {
+                    console.log(result);
+                })
+        }, [URL]);
+    
+    
         const updateMatricula = () => {
             var data = {
-                idPeriodo: idPeriodo,
-                idMateria: idMateria,
-                idPersona: idPersona,
+                idPeriodo: idPeriodo.id,
+                idMateria: idMateria.idM,
+                idPersona: idPersona.idP,
             };
             MatriculaDataService.update(id, data)
             .then(response => {
@@ -67,26 +68,22 @@ import Select from "react-select";
         const home = () => {
             window.location.href = "/matricula/listar";
         }
-
-     //retrievePeriodos
-
+    
         React.useEffect(() => {
             retrievePeriodos();
         }, []);
-
+    
         const retrievePeriodos = () => {
             PeriodoDataService.getAll()
-            .then(response => {
-                setPeriodos(response.data);
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+                .then(response => {
+                    setPeriodos(response.data);
+                    console.log(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
         };
-
-        //retrieveMaterias
-
+        //retrievePeriodos
         React.useEffect(() => {
             retrieveMaterias();
         }, []);
@@ -118,12 +115,12 @@ import Select from "react-select";
                 console.log(e);
             });
         };
-
-
-        const handleChangePeriodo= (selectedOptionPeriodo) => {
+    
+    
+        const handleChange = (selectedOptionPeriodo) => {
             setSelectedOptionPeriodo(selectedOptionPeriodo);
-            setIdPeriodo(selectedOptionPeriodo.value);
-      
+            setIdPeriodo({ id: selectedOptionPeriodo.value});
+
             MateriaDataService.findAllByPeriodoId(selectedOptionPeriodo.value)
             .then(response => {
                 setMaterias(response.data);
@@ -132,21 +129,20 @@ import Select from "react-select";
             .catch(e => {
                 console.log(e);
             });
-        };
-       
-        const handleChangeMateria = (selectedOptionMateria) => {
+        }
+
+        const handleChange1 = (selectedOptionMateria) => {
             setSelectedOptionMateria(selectedOptionMateria);
-            setIdMateria(selectedOptionMateria.value);
-        };
-        const handleChangePersona = (selectedOptionPersona) => {
+            setIdMateria({ idM: selectedOptionMateria.value});
+        }
+
+        const handleChange2 = (selectedOptionPersona) => {
             setSelectedOptionPersona(selectedOptionPersona);
-            setIdPersona(selectedOptionPersona.value);
-        };
+            setIdPersona({ idP: selectedOptionPersona.value});
+        }
+    
 
-
-
-
-
+    
         return (
             <div className="submit-form">
                 {submitted ? (
@@ -158,103 +154,103 @@ import Select from "react-select";
                     </div>
                 ) : (
                     <div>
-                        <div className="edit-form">
-                            <h4>Editar Matricula</h4>
-                            <form>
-                                <div className="form-group">
-                                    <label htmlFor="idPeriodo">Periodo Actual</label>
-                                    <select
-                                        type="text"
-                                        className="form-control"
-                                        id="idPeriodo"
-                                        disabled
-                                        value={matricula.idPeriodo}
-                                    >
-                                        {periodos.map((periodo) => (
-                                            <option key={periodo.id} value={periodo.id}>
-                                                {periodo.descripcion}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="idPeriodo">Periodo</label>
-                                    <Select
-                                        value={selectedOptionPeriodo}
-                                        onChange={handleChangePeriodo}
-                                        options={periodos.map((periodo) => ({
-                                            value: periodo.id,
-                                            label: periodo.descripcion,
-                                        }))}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="idMateria">Materia Actual</label>
-                                    <select
-                                        type="text"
-                                        className="form-control"
-                                        id="idMateria"
-                                        disabled
-                                        value={matricula.idMateria}
-                                    >
-                                        {materias.map((materia) => (
-                                            <option key={materia.id} value={materia.id}>
-                                                {materia.descripcion}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="idMateria">Materia</label>
-                                    <Select
-                                        value={selectedOptionMateria}
-                                        onChange={handleChangeMateria}
-                                        options={materias.map((materia) => ({   
-                                            value: materia.id,
-                                            label: materia.descripcion,
-                                        }))}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="idPersona">Persona Actual</label>
-                                    <select
-                                        type="text"
-                                        className="form-control"
-                                        id="idPersona"
-                                        disabled
-                                        value={matricula.idPersona}
-                                    >
-                                        {personas.map((persona) => (
-                                            <option key={persona.id} value={persona.id}>
-                                                {persona.nombre}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="idPersona">Persona</label>
-                                    <Select
-                                        value={selectedOptionPersona}
-                                        onChange={handleChangePersona}
-                                        options={personas.map((persona) => ({
-                                            value: persona.id,
-                                            label: persona.nombre,
-                                        }))}
-                                    />
-                                </div>
-                            </form>          
-                            <button onClick={updateMatricula} className="btn btn-success">
-                                Actualizar
-                            </button>
-                            <button onClick={home} className="btn btn-danger">
-
-                                Cancelar
-                            </button>
+                        <div className="form-group">
+                            <label htmlFor="idperiodo">Periodo Actual</label>
+                            <input
+                                className="form-control"
+                                id="idperiodo"
+                                disabled
+                                value={idPeriodo.descripcion}
+                            >
+                            </input>
+                            <input
+                                className="form-control"
+                                id="idperiodo"
+                                disabled
+                                value={idPeriodo.id}
+                                name="idperiodo"
+                                hidden
+                            >
+                            </input>
                         </div>
+                        <div className="form-group">
+                            <label htmlFor="idPeriodo">Periodo</label>
+                            <Select
+                                value={selectedOptionPeriodo}
+                                onChange={handleChange}
+                                options={periodos.map((periodo) => ({
+                                    value: periodo.id,
+                                    label: periodo.descripcion,
+                                }))}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="idmateria">Materia Actual</label>
+                            <input
+                                className="form-control"
+                                id="idmateria"
+                                disabled
+                                value={idMateria.descripcion}
+                            >
+                            </input>
+                            <input
+                                className="form-control"
+                                id="idmateria"
+                                disabled
+                                value={idMateria.idM}
+                                name="idmateria"
+                                hidden
+                            >
+                            </input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="idMateria">Materia</label>
+                            <Select
+                                value={selectedOptionMateria}
+                                onChange={handleChange1}
+                                options={materias.map((materia) => ({
+                                    value: materia.id,
+                                    label: materia.descripcion,
+                                }))}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="idpersona">Persona Actual</label>
+                            <input
+                                className="form-control"
+                                id="idpersona"
+                                disabled
+                                value={idPersona.nombre}
+                            >
+                            </input>
+                            <input
+                                className="form-control"
+                                id="idpersona"
+                                disabled
+                                value={idPersona.idP}
+                                name="idpersona"
+                                hidden
+                            >
+                            </input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="idPersona">Persona</label>
+                            <Select
+                                value={selectedOptionPersona}
+                                onChange={handleChange2}
+                                options={personas.map((persona) => ({
+                                    value: persona.id,
+                                    label: persona.nombre,
+                                }))}
+                            />
+                        </div>
+                        <button onClick={updateMatricula} className="btn btn-success">
+                            Actualizar
+                        </button>
                     </div>
                 )}
             </div>
         );
-    };      
+    };
 
     export default MatriculaUpdate;
