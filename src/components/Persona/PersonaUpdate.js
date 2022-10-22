@@ -21,7 +21,7 @@ const PersonaUpdate = () => {
     let errors = {};
     //letras y numeros
     let regexIdentificacion = /^[a-zA-Z0-9]+$/;
-    let regexNombre = /^[a-zA-Z]+$/;
+    let regexNombre = /^[a-zA-Z ]+$/;
 
     if (identificacion === "") {
       errors.identificacion = "La identificacion es requerida";
@@ -73,7 +73,7 @@ const PersonaUpdate = () => {
     let errors = {};
     //letras y numeros
     let regexIdentificacion = /^[a-zA-Z0-9]+$/;
-    let regexNombre = /^[a-zA-Z]+$/;
+    let regexNombre = /^[a-zA-Z ]+$/;
     if ((identificacion === "") | (nombre === "")) {
       return false;
     } else if (
