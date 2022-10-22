@@ -122,29 +122,18 @@ const MatriculaAdd = () => {
         label: periodo.nombre,
     }));
 
-    const validarcupos = () => {
-        if (matricula.idMateria === "") {
-            setCupos({ value: "", error: "Debe seleccionar una materia" });
-            return false;
-        } else {
-            setCupos({ value: "", error: "" });
-
-            MateriaDataService.findById(matricula.idMateria)
-            .then(response => {
-                console.log(response.data);
-                if (response.data.cupo === 0) {
-                    setCupos({ value: "", error: "No hay cupos disponibles" });
-                    return false;
-                } else {
-                    setCupos({ value: "", error: "" });
-                    return true;
-                }
-            })
-            .catch(e => {
-                console.log(e);
-            });
+            //metodo validar cupos de la materia seleccionada traer la info de los cupos y dar un mensaje de error si no hay cupos
+    const validarCupos = () => {
+        if (selectedOptionMateria != null) {
+            if (selectedOptionMateria.cupo == 0) {
+                return <div className="alert alert-danger" role="alert"> No hay cupos disponibles </div>;
+        }else{
+            return <div className="alert alert-success" role="alert"> Hay {selectedOptionMateria.cupo} cupos disponibles </div>;
         }
     };
+    };
+
+               
     return (
         <div className="submit-form">
             {submitted ? (
@@ -177,12 +166,11 @@ const MatriculaAdd = () => {
                             options={materias.map((materia) => ({
                                 value: materia.id,
                                 label: materia.descripcion,
+                                cupo: materia.cupos,
                             }))}
-                            onBlur={validarcupos}
                         />
-                    
-                    
-                    <div className="alert alert-danger" role="alert">{cupo.error}</div> 
+                
+                        {validarCupos()}
                         
                     </div>
                     <div className="form-group">
@@ -193,6 +181,7 @@ const MatriculaAdd = () => {
                             options={personas.map((persona) => ({
                                 value: persona.id,
                                 label: persona.nombre,
+        
                             }))}
                         />
                     </div>
@@ -208,14 +197,3 @@ const MatriculaAdd = () => {
 
 
 export default MatriculaAdd;
-
-
-
-
-   
-
-
-                   
-
-        
-      

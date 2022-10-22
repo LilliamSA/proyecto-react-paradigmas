@@ -140,9 +140,7 @@ import Select from "react-select";
             setSelectedOptionPersona(selectedOptionPersona);
             setIdPersona({ idP: selectedOptionPersona.value});
         }
-    
 
-    
         return (
             <div className="submit-form">
                 {submitted ? (
