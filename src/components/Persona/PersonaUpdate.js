@@ -15,7 +15,7 @@ const PersonaUpdate = () => {
   const [persona, setPersona] = useState({});
   const [isloaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState(false);
 
   const validacionesForm = () => {
     let errors = {};

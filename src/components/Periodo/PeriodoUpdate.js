@@ -15,6 +15,21 @@ const PeriodoUpdate = () => {
   const [success, setSuccess] = useState(false);
   const [err, setErr] = useState(false);
   const [input, setInput] = useState(false);
+  const [errors, setErrors] = useState(false);
+
+  const validarForm = () => {
+    let errors = {};
+    //letras y numeros y espacios en blanco
+    let regexDescripcion = /^[a-zA-Z0-9 ]+$/;
+
+    if (descripcion === "") {
+      errors.descripcion = "La descripcion es requerida";
+    } else if (!regexDescripcion.test(descripcion)) {
+      errors.descripcion = "La descripcion solo puede contener letras y numeros";
+    } 
+
+    return errors;
+  };
 
   useEffect(() => {
     fetch(URL)
@@ -34,16 +49,20 @@ const PeriodoUpdate = () => {
   }, [URL]);
 
   const validar = () => {
+    let regexDescripcion = /^[a-zA-Z0-9 ]+$/;
     if (descripcion === "") {
       return false;
-    } else {
-      return true;
+    } else if (!regexDescripcion.test(descripcion)) {
+      return false;
     }
+    return true;
   };
+
   const reset = () => {
     setSuccess(false);
     setErr(false);
     setInput(false);
+    setErrors(false);
   };
 
   const updatePeriodo = () => {
@@ -94,7 +113,11 @@ const PeriodoUpdate = () => {
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
             name="descripcion"
-          />
+            onBlur={() => setErrors(validarForm())}
+            />
+            {errors.descripcion && (
+              <p className="text-danger">{errors.descripcion}</p>
+            )}
         </div>
         <button onClick={updatePeriodo} className="btn btn-success">
           Actualizar

@@ -13,7 +13,7 @@ const PeriodoAdd = () => {
   const [errors, setErrors] = useState(false);
 
   const validar = () => {
-    let regexDescripcion = /^[a-zA-Z]+$/;
+    let regexDescripcion = /^[a-zA-Z0-9 ]+$/;
     if (descripcion === "") {
       return false;
     } else if (!regexDescripcion.test(descripcion)) {
@@ -24,14 +24,14 @@ const PeriodoAdd = () => {
 
   const validarForm = () => {
     //que acepte letras, numeros y espacios en blanco
-    let regexDescripcion = /^[a-zA-Z0-9[\ ]]+$/;
+    let regexDescripcion = /^[a-zA-Z0-9 ]+$/;
 
     let errors = {};
 
     if (descripcion === "") {
       errors.descripcion = "La descripcion es requerida";
     } else if (!regexDescripcion.test(descripcion)) {
-      errors.descripcion = "La descripcion solo puede contener letras";
+      errors.descripcion = "La descripcion solo puede contener letras y numeros";
     }
     return errors;
   };
