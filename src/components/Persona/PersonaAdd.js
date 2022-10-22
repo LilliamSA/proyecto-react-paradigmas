@@ -13,8 +13,34 @@ const PersonaAdd = (props) => {
   const [input, setInput] = useState(false);
   const [identificacion, setIdentificacion] = useState("");
   const [nombre, setNombre] = useState("");
+  const [errors, setErrors] = useState({});
+  
+ const validacionesForm = () => {
+    let errors = {};
+    //letras y numeros
+    let regexIdentificacion = /^[a-zA-Z0-9]+$/;
+    let regexNombre = /^[a-zA-Z]+$/;
 
-  const validar = () => {
+    if (!identificacion) {
+      errors.identificacion = "La identificacion es requerida";
+    } else if (!regexIdentificacion.test(identificacion)) {
+      errors.identificacion = "La identificacion solo puede contener letras y numeros";
+    }else if (identificacion.length < 9) {
+      errors.identificacion = "La identificacion debe tener al menos 9 caracteres";
+    }else if (identificacion.length > 9) {
+      errors.identificacion = "La identificacion debe tener maximo 9 caracteres";
+    }
+
+    if (!nombre) {
+      errors.nombre = "El nombre es requerido";
+    } else if (!regexNombre.test(nombre)) {
+      errors.nombre = "El nombre solo puede contener letras";
+    }
+
+    return errors;
+  };
+  
+    const validar = () => {
     if ((identificacion === "") | (nombre === "")) {
       return false;
     } else {
@@ -50,6 +76,7 @@ const PersonaAdd = (props) => {
     window.location.href = "/persona/listar";
   };
 
+
   return (
     <>
       <div className="submit-form">
@@ -63,7 +90,11 @@ const PersonaAdd = (props) => {
             value={identificacion}
             onChange={(e) => setIdentificacion(e.target.value)}
             name="identificacion"
+            onBlur={() => setErrors(validacionesForm())}
           />
+          {errors.identificacion && (
+            <p className="text-danger">{errors.identificacion}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="nombre">Nombre</label>
@@ -75,7 +106,10 @@ const PersonaAdd = (props) => {
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             name="nombre"
+            onBlur={() => setErrors(validacionesForm())}
           />
+          {errors.nombre && <p className="text-danger">{errors.nombre}</p>}
+
         </div>
         <button onClick={savePersona} className="btn btn-success">
           Agregar

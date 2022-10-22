@@ -15,6 +15,35 @@ const PersonaUpdate = () => {
   const [persona, setPersona] = useState({});
   const [isloaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({});
+
+  const validacionesForm = () => {
+    let errors = {};
+    //letras y numeros
+    let regexIdentificacion = /^[a-zA-Z0-9]+$/;
+    let regexNombre = /^[a-zA-Z]+$/;
+
+    if (!identificacion) {
+      errors.identificacion = "La identificacion es requerida";
+    } else if (!regexIdentificacion.test(identificacion)) {
+      errors.identificacion =
+        "La identificacion solo puede contener letras y numeros";
+    } else if (identificacion.length < 9) {
+      errors.identificacion =
+        "La identificacion debe tener al menos 9 caracteres";
+    } else if (identificacion.length > 9) {
+      errors.identificacion =
+        "La identificacion debe tener maximo 9 caracteres";
+    }
+
+    if (!nombre) {
+      errors.nombre = "El nombre es requerido";
+    } else if (!regexNombre.test(nombre)) {
+      errors.nombre = "El nombre solo puede contener letras";
+    }
+
+    return errors;
+  };
 
   useEffect(() => {
     fetch(URL)
@@ -40,6 +69,7 @@ const PersonaUpdate = () => {
     } else {
       return true;
     }
+  
   };
   const reset = () => {
     setSuccess(false);
@@ -83,7 +113,11 @@ const PersonaUpdate = () => {
             value={identificacion}
             onChange={(e) => setIdentificacion(e.target.value)}
             name="identificacion"
+            onBlur={() => setErrors(validacionesForm())}
           />
+          {errors.identificacion && (
+            <p className="text-danger">{errors.identificacion}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="nombre">Nombre</label>
@@ -95,7 +129,9 @@ const PersonaUpdate = () => {
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             name="nombre"
+            onBlur={() => setErrors(validacionesForm())}
           />
+          {errors.nombre && <p className="text-danger">{errors.nombre}</p>}
         </div>
         <button onClick={updatePersona} className="btn btn-success">
           Actualizar
