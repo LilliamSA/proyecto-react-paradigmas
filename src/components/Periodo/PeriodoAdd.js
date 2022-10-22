@@ -10,18 +10,37 @@ const PeriodoAdd = () => {
   const [success, setSuccess] = useState(false);
   const [err, setErr] = useState(false);
   const [input, setInput] = useState(false);
+  const [errors, setErrors] = useState(false);
 
   const validar = () => {
+    let regexDescripcion = /^[a-zA-Z]+$/;
     if (descripcion === "") {
       return false;
-    } else {
-      return true;
+    } else if (!regexDescripcion.test(descripcion)) {
+      return false;
     }
+    return true;
   };
+
+  const validarForm = () => {
+    //que acepte letras, numeros y espacios en blanco
+    let regexDescripcion = /^[a-zA-Z0-9[\ ]]+$/;
+
+    let errors = {};
+
+    if (descripcion === "") {
+      errors.descripcion = "La descripcion es requerida";
+    } else if (!regexDescripcion.test(descripcion)) {
+      errors.descripcion = "La descripcion solo puede contener letras";
+    }
+    return errors;
+  };
+
   const reset = () => {
     setSuccess(false);
     setErr(false);
     setInput(false);
+    setErrors(false);
   };
 
   const savePeriodo = () => {
@@ -59,7 +78,11 @@ const PeriodoAdd = () => {
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
             name="descripcion"
+            onBlur={() => setErrors(validarForm())}
           />
+          {errors.descripcion && (
+            <p className="text-danger">{errors.descripcion}</p>
+          )}
         </div>
         <button onClick={savePeriodo} className="btn btn-success">
           Agregar
@@ -81,7 +104,7 @@ const PeriodoAdd = () => {
       )}
       {input && (
         <div className="alert alert-danger" role="alert">
-          Por favor llene todos los campos
+          Por favor llene todos los campos o revise sus datos
         </div>
       )}
     </>
