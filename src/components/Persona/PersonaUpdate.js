@@ -9,14 +9,16 @@
         const {id} = useParams();
         const URL = "http://localhost:8080/persona/"+id;
         //traer la informacion de la persona por id seleccionada en la tabla
-
-        const [persona, setPersona] = useState({}); //persona es el nombre de la variable y setPersona es el nombre de la funcion
-        const [submitted, setSubmitted] = useState(false);//submitted es el nombre de la variable y setSubmitted es el nombre de la funcion
+        const [success, setSuccess] = useState(false);
+        const [err, setErr] = useState(false);
+        const [input, setInput] = useState(false);
+        const [idPersona, setIdPersona] = useState("");
+        const [identificacion, setIdentificacion] = useState("");
+        const [nombre, setNombre] = useState("");
+        const [persona, setPersona] = useState({});
+        const [isloaded , setIsLoaded] = useState(false);   
         const [error, setError] = useState(null);
-        const [isLoaded, setIsLoaded] = useState(false);
-        const [identificacion, setIdentificacion] = useState(""); //que se actualice el valor de la identificacion
-        const [nombre, setNombre] = useState(""); //que se actualice el valor del nombre
-        const [idPersona, setIdPersona] = useState(""); //que se actualice el valor del idPersona
+
 
         useEffect(() => {
             fetch(URL)
@@ -36,75 +38,96 @@
             )
         }, [URL]);
 
-
+      
+        const validar = () => {
+          if ((identificacion === "") | (nombre === "")) {
+            return false;
+          } else {
+            return true;
+          }
+        };
+        const reset = () => {
+          setSuccess(false);
+          setErr(false);
+          setInput(false);
+        };
 
         const updatePersona = () => {
+            reset();
             var data = {
-                id: idPersona,
                 identificacion: identificacion,
                 nombre: nombre,
             };
-            PersonaDataService.update(id, data)
-            .then(response => {
-                setPersona({
-                    id: response.data.id,
-                    identificacion: response.data.identificacion,
-                    nombre: response.data.nombre,
+            if (validar()) {
+                PersonaDataService.update(id, data)
+                .then((response) => {
+                    setSuccess(true);
+                })
+                .catch((e) => {
+                    setErr(true);
                 });
-                setSubmitted(true);
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-        }
+            } else {
+                setInput(true);
+            }
+        };
+
         const home = () => {
             window.location.href = "/persona/listar";
         }
         
 
         return (
-            <div className="submit-form">
-            {submitted ? (
-                <div>
-                <h4>Persona actualizada correctamente!</h4>
-                <button className="btn btn-success" onClick={home}>
-                    Volver
-                </button>
+            <>  
+                <div className="submit-form">
+                    <div className="form-group">
+                        <label htmlFor="identificacion">Identificación</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="identificacion"
+                            required
+                            value={identificacion}
+                            onChange={(e) => setIdentificacion(e.target.value)}
+                            name="identificacion"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="nombre">Nombre</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="nombre"
+                            required
+                            value={nombre}
+                            onChange={(e) => setNombre(e.target.value)}
+                            name="nombre"
+                        />
+                    </div>
+                    <button onClick={updatePersona} className="btn btn-success">
+                        Actualizar
+                    </button>
                 </div>
-            ) : (
-                <div>
-                <div className="form-group">
-                    <label htmlFor="identificacion">Identificacion</label>
-                    <input
-                    type="text"
-                    className="form-control"
-                    id="identificacion"
-                    required
-                    value={identificacion}
-                    onChange={(e) => setIdentificacion(e.target.value)} 
-                    name="identificacion"
-
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="nombre">Nombre</label>
-                    <input
-                    type="text"
-                    className="form-control"
-                    id="nombre"
-                    required
-                    value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
-                    name="nombre"
-                    />  
-                </div>
-                <button onClick={updatePersona} className="btn btn-success">
-                    Actualizar
-                </button>
-                </div>
-            )}
-            </div>
+                {success && (
+                    <div className="alert alert-success" role="alert">
+                        Persona actualizada correctamente
+                        <br />
+          <button onClick={home} className="btn btn-warning">
+            Volver
+          </button>
+                        </div>
+                )}
+                {err && (
+                    <div className="alert alert-danger" role="alert">
+                        Error al actualizar persona
+                        </div>
+                )}
+                {input && (
+                    <div className="alert alert-danger" role="alert">
+                        Por favor ingrese todos los campos
+                        </div>
+                )}
+            </>
         );
-    }
+    };
+
     export default PersonaUpdate;
