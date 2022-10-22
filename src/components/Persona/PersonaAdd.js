@@ -14,8 +14,8 @@ const PersonaAdd = (props) => {
   const [identificacion, setIdentificacion] = useState("");
   const [nombre, setNombre] = useState("");
   const [errors, setErrors] = useState(false);
-  
- const validacionesForm = () => {
+
+  const validacionesForm = () => {
     let errors = {};
     //letras y numeros
     let regexIdentificacion = /^[a-zA-Z0-9]+$/;
@@ -26,10 +26,10 @@ const PersonaAdd = (props) => {
     } else if (!regexIdentificacion.test(identificacion)) {
       errors.identificacion =
         "La identificacion solo puede contener letras y numeros";
-    }else if (identificacion.length < 9) {
+    } else if (identificacion.length < 9) {
       errors.identificacion =
         "La identificacion debe tener al menos 9 caracteres";
-    }else if (identificacion.length > 9) {
+    } else if (identificacion.length > 9) {
       errors.identificacion =
         "La identificacion debe tener maximo 9 caracteres";
     }
@@ -42,7 +42,7 @@ const PersonaAdd = (props) => {
 
     return errors;
   };
-  
+
   const validar = () => {
     let errors = {};
     //letras y numeros
@@ -50,15 +50,18 @@ const PersonaAdd = (props) => {
     let regexNombre = /^[a-zA-Z]+$/;
     if ((identificacion === "") | (nombre === "")) {
       return false;
-    } else if (!regexIdentificacion.test(identificacion)) {
+    } else if (
+      !regexIdentificacion.test(identificacion) | !regexNombre.test(nombre)
+    ) {
       return false;
     } else if (identificacion.length < 9) {
       return false;
-    }else if (identificacion.length > 9) {
+    } else if (identificacion.length > 9) {
       return false;
     }
     return true;
   };
+
   const reset = () => {
     setSuccess(false);
     setErr(false);
@@ -76,8 +79,7 @@ const PersonaAdd = (props) => {
       PersonaDataService.create(data)
         .then((response) => {
           setSuccess(true);
-        }
-        )
+        })
         .catch((e) => {
           setErr(true);
         });
@@ -89,7 +91,6 @@ const PersonaAdd = (props) => {
   const home = () => {
     window.location.href = "/persona/listar";
   };
-
 
   return (
     <>
@@ -109,7 +110,6 @@ const PersonaAdd = (props) => {
           {errors.identificacion && (
             <p className="text-danger">{errors.identificacion}</p>
           )}
-
         </div>
         <div className="form-group">
           <label htmlFor="nombre">Nombre</label>
@@ -124,7 +124,6 @@ const PersonaAdd = (props) => {
             onBlur={() => setErrors(validacionesForm())}
           />
           {errors.nombre && <p className="text-danger">{errors.nombre}</p>}
-
         </div>
         <button onClick={savePersona} className="btn btn-success">
           Agregar

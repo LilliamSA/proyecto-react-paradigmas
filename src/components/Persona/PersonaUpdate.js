@@ -23,7 +23,7 @@ const PersonaUpdate = () => {
     let regexIdentificacion = /^[a-zA-Z0-9]+$/;
     let regexNombre = /^[a-zA-Z]+$/;
 
-    if (!identificacion) {
+    if (identificacion === "") {
       errors.identificacion = "La identificacion es requerida";
     } else if (!regexIdentificacion.test(identificacion)) {
       errors.identificacion =
@@ -36,7 +36,7 @@ const PersonaUpdate = () => {
         "La identificacion debe tener maximo 9 caracteres";
     }
 
-    if (!nombre) {
+    if (nombre === "") {
       errors.nombre = "El nombre es requerido";
     } else if (!regexNombre.test(nombre)) {
       errors.nombre = "El nombre solo puede contener letras";
@@ -44,7 +44,6 @@ const PersonaUpdate = () => {
 
     return errors;
   };
-
   useEffect(() => {
     fetch(URL)
       .then((res) => res.json())
@@ -63,20 +62,32 @@ const PersonaUpdate = () => {
       );
   }, [URL]);
 
-  const validar = () => {
-    if ((identificacion === "") | (nombre === "")) {
-      return false;
-    } else {
-      return true;
-    }
-  
-  };
   const reset = () => {
     setSuccess(false);
     setErr(false);
     setInput(false);
+    setErrors(false);
   };
 
+  const validar = () => {
+    let errors = {};
+    //letras y numeros
+    let regexIdentificacion = /^[a-zA-Z0-9]+$/;
+    let regexNombre = /^[a-zA-Z]+$/;
+    if ((identificacion === "") | (nombre === "")) {
+      return false;
+    } else if (
+      !regexIdentificacion.test(identificacion) | !regexNombre.test(nombre)
+    ) {
+      return false;
+    } else if (identificacion.length < 9) {
+      return false;
+    } else if (identificacion.length > 9) {
+      return false;
+    }
+    return true;
+  };
+  
   const updatePersona = () => {
     reset();
     var data = {
@@ -156,6 +167,7 @@ const PersonaUpdate = () => {
           Por favor ingrese todos los campos
         </div>
       )}
+
     </>
   );
 };
