@@ -10,6 +10,8 @@ const PersonaAdd = (props) => {
     };
     const [persona, setPersona] = useState(initialPersonaState);
     const [submitted, setSubmitted] = useState(false);
+    const [identificacion, setIdentificacion] = useState({ value: "", error: "" });
+    const [nombre, setNombre] = useState({ value: "", error: "" });
      
     const savePersona = () => {
         var data = {
@@ -36,6 +38,16 @@ const PersonaAdd = (props) => {
         window.location.href = "/persona/listar";
     }
 
+    const handleBlur = () => {
+      if (identificacion.value.required === true) {
+            setIdentificacion({ value: identificacion.value, error: "La identificacion es requerida" });
+        }else if (identificacion.value.length < 10) {
+            setIdentificacion({ value: identificacion.value, error: "La identificacion debe tener 10 digitos" });
+        }else {
+            setIdentificacion({ value: identificacion.value, error: "" });
+        }
+    }
+    
     return (
         <div className="submit-form">
         {submitted ? (
@@ -57,7 +69,9 @@ const PersonaAdd = (props) => {
                 value={persona.identificacion}
                 onChange={(e) => setPersona({ ...persona, identificacion: e.target.value })}
                 name="identificacion"
+                onBlur={handleBlur}
                 />
+                {identificacion.error && <p className="error">{identificacion.error}</p>}
             </div>
             <div className="form-group">
                 <label htmlFor="nombre">Nombre</label>

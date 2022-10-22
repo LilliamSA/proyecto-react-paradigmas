@@ -65,6 +65,8 @@ const MateriaAdd = () => {
         setMateria({ ...materia, idPeriodo: selectedOption.value });
     };
 
+
+
     return (
         <div className="submit-form">
         {submitted ? (

@@ -23,6 +23,7 @@ const MatriculaAdd = () => {
     const [selectedOptionPersona, setSelectedOptionPersona] = useState(null);
     const [materias, setMaterias] = useState([]);
     const [personas, setPersonas] = useState([]);
+    const [cupo, setCupos] = useState({ value: "", error: "" });
 
     React.useEffect(() => {
         retrievePeriodos();
@@ -120,6 +121,30 @@ const MatriculaAdd = () => {
         value: periodo.id,
         label: periodo.nombre,
     }));
+
+    const validarcupos = () => {
+        if (matricula.idMateria === "") {
+            setCupos({ value: "", error: "Debe seleccionar una materia" });
+            return false;
+        } else {
+            setCupos({ value: "", error: "" });
+
+            MateriaDataService.findById(matricula.idMateria)
+            .then(response => {
+                console.log(response.data);
+                if (response.data.cupo === 0) {
+                    setCupos({ value: "", error: "No hay cupos disponibles" });
+                    return false;
+                } else {
+                    setCupos({ value: "", error: "" });
+                    return true;
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        }
+    };
     return (
         <div className="submit-form">
             {submitted ? (
@@ -153,7 +178,12 @@ const MatriculaAdd = () => {
                                 value: materia.id,
                                 label: materia.descripcion,
                             }))}
+                            onBlur={validarcupos}
                         />
+                    
+                    
+                    <div className="alert alert-danger" role="alert">{cupo.error}</div> 
+                        
                     </div>
                     <div className="form-group">
                         <label htmlFor="idPersona">Persona</label>
