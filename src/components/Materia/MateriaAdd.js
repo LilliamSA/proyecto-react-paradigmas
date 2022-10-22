@@ -11,11 +11,72 @@ const MateriaAdd = () => {
         cupos: "",
         idPeriodo: "",
     };
-    const [materia, setMateria] = useState(initialMateriaState);
-    const [submitted, setSubmitted] = useState(false);
+    const [descripcion, setDescripcion] = useState("");
+    const [cupos, setCupos] = useState("");
+    const [idPeriodo, setIdPeriodo] = useState("");
     const [periodos, setPeriodos] = useState([]);
+    const [success, setSuccess] = useState(false);
+    const [err, setErr] = useState(false);
+    const [input, setInput] = useState(false);
+    const [errors, setErrors] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
-    const [options, setOptions] = useState([]);
+
+    //validaciones
+    const validar = () => {
+        let regexCupos = /^[0-9]+$/;
+        let regexDescripcion = /^[a-zA-Z ]+$/;
+
+        if (descripcion === "" || cupos === "") {
+            return false;
+        } else if (!regexCupos.test(cupos)) {
+            return false;
+        } else if (!regexDescripcion.test(descripcion)) {
+            return false;
+        }else if (idPeriodo === "") {
+            return false;
+        }else if (selectedOption === null) {
+            return false;
+        }
+
+        return true;
+    };
+
+    const validarForm = () => {
+        //que acepte letras, numeros y espacios en blanco
+        let regexCupos = /^[0-9]+$/;
+        let regexDescripcion = /^[a-zA-Z ]+$/;
+
+        let errors = {};
+
+        if (descripcion === "") {
+            errors.descripcion = "La descripcion es requerida";
+        } else if (!regexDescripcion.test(descripcion)) {
+            errors.descripcion = "La descripcion solo puede contener letras";
+        }
+
+        if (cupos === "") {
+            errors.cupos = "Los cupos son requeridos";
+        } else if (!regexCupos.test(cupos)) {
+            errors.cupos = "Los cupos solo pueden contener numeros";
+        }
+
+        if (idPeriodo === "") {
+            errors.idPeriodo = "El periodo es requerido";
+        }else if (selectedOption === null) {
+            errors.idPeriodo = "El periodo es requerido";
+
+        }
+
+        return errors;
+
+    };
+
+    const reset = () => {
+        setSuccess(false);
+        setErr(false);
+        setInput(false);
+        setErrors(false);
+      };
 
     React.useEffect(() => {
         retrievePeriodos();
@@ -33,28 +94,25 @@ const MateriaAdd = () => {
     };
 
     const saveMateria = () => {
+        reset();
         var data = {
-            descripcion: materia.descripcion,
-            cupos: materia.cupos,
-            idPeriodo: materia.idPeriodo,
+            descripcion: descripcion,
+            cupos: cupos,
+            idPeriodo: idPeriodo,
         };
-
-      //HACER VALIDACIONES incluyendo el combo-box
-        MateriaDataService.create(data)
-        .then(response => {
-            setMateria({
-                id: response.data.id,
-                descripcion: response.data.descripcion,
-                cupos: response.data.cupos,
-                idPeriodo: response.data.idPeriodo,
+        if (validar()) {
+            MateriaDataService.create(data)
+            .then(response => {
+                setSuccess(true);
+            })
+            .catch((e) => {
+              setErr(true);
             });
-            setSubmitted(true);
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
-    };
+        } else {
+          setInput(true);
+        }
+      };
+
 
     const home = () => {
         window.location.href = "/materia/listar";
@@ -62,22 +120,15 @@ const MateriaAdd = () => {
 
     const handleChange = (selectedOption) => {
         setSelectedOption(selectedOption);
-        setMateria({ ...materia, idPeriodo: selectedOption.value });
+        setIdPeriodo(selectedOption.value);
     };
 
 
 
     return (
-        <div className="submit-form">
-        {submitted ? (
+        <>
             <div>
-            <h4>Materia agregada correctamente!</h4>
-            <button className="btn btn-success" onClick={home}>
-                Volver
-            </button>
-            </div>
-        ) : (
-            <div>
+            <div className="submit-form"></div>
             <div className="form-group">
                 <label htmlFor="descripcion">Descripcion</label>
                 <input
@@ -85,10 +136,14 @@ const MateriaAdd = () => {
                 className="form-control"
                 id="descripcion"
                 required
-                value={materia.descripcion}
-                onChange={(e) => setMateria({ ...materia, descripcion: e.target.value })}
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
                 name="descripcion"
-                />  
+                onBlur={() => setErrors(validarForm())}
+                />
+                {errors.descripcion && (
+                  <p className="text-danger">{errors.descripcion}</p>
+                )} 
             </div>
             <div className="form-group">
                 <label htmlFor="cupos">Cupos</label>
@@ -97,10 +152,14 @@ const MateriaAdd = () => {
                 className="form-control"
                 id="cupos"
                 required
-                value={materia.cupos}
-                onChange={(e) => setMateria({ ...materia, cupos: e.target.value })}
+                value={cupos}
+                onChange={(e) => setCupos(e.target.value)}
                 name="cupos"
+                onBlur={() => setErrors(validarForm())}
                 />
+                {errors.cupos && (
+                  <p className="text-danger">{errors.cupos}</p>
+                )}
             </div>
             <div className="form-group">
                 <label htmlFor="id_periodo">Periodo</label>
@@ -114,15 +173,36 @@ const MateriaAdd = () => {
                         value: periodo.id,
                         label: periodo.descripcion,
                     }))}
+                    onBlur={() => setErrors(validarForm())}
                 />
+                {errors.idPeriodo && (
+                    <p className="text-danger">{errors.idPeriodo}</p>
+                )}
             </div>
             <button onClick={saveMateria} className="btn btn-success">
                 Agregar
             </button>
             </div>
-        )}
+            {success && (
+        <div className="alert alert-success" role="alert">
+          Materia agregada con éxito!
+          <br />
+          <button onClick={home} className="btn btn-warning">
+            Volver
+          </button>
         </div>
-    );
+      )}
+      {err && (
+        <div className="alert alert-danger" role="alert">
+          Error al agregar la materia
+        </div>
+      )}
+      {input && (
+        <div className="alert alert-danger" role="alert">
+          Por favor llene todos los campos o revise sus datos
+        </div>
+      )}
+    </>
+  );
 };
-
 export default MateriaAdd;
