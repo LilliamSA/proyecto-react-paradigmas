@@ -13,7 +13,7 @@ const PersonaAdd = (props) => {
   const [input, setInput] = useState(false);
   const [identificacion, setIdentificacion] = useState("");
   const [nombre, setNombre] = useState("");
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState(false);
   
  const validacionesForm = () => {
     let errors = {};
@@ -21,17 +21,20 @@ const PersonaAdd = (props) => {
     let regexIdentificacion = /^[a-zA-Z0-9]+$/;
     let regexNombre = /^[a-zA-Z]+$/;
 
-    if (!identificacion) {
+    if (identificacion === "") {
       errors.identificacion = "La identificacion es requerida";
     } else if (!regexIdentificacion.test(identificacion)) {
-      errors.identificacion = "La identificacion solo puede contener letras y numeros";
+      errors.identificacion =
+        "La identificacion solo puede contener letras y numeros";
     }else if (identificacion.length < 9) {
-      errors.identificacion = "La identificacion debe tener al menos 9 caracteres";
+      errors.identificacion =
+        "La identificacion debe tener al menos 9 caracteres";
     }else if (identificacion.length > 9) {
-      errors.identificacion = "La identificacion debe tener maximo 9 caracteres";
+      errors.identificacion =
+        "La identificacion debe tener maximo 9 caracteres";
     }
 
-    if (!nombre) {
+    if (nombre === "") {
       errors.nombre = "El nombre es requerido";
     } else if (!regexNombre.test(nombre)) {
       errors.nombre = "El nombre solo puede contener letras";
@@ -40,17 +43,27 @@ const PersonaAdd = (props) => {
     return errors;
   };
   
-    const validar = () => {
+  const validar = () => {
+    let errors = {};
+    //letras y numeros
+    let regexIdentificacion = /^[a-zA-Z0-9]+$/;
+    let regexNombre = /^[a-zA-Z]+$/;
     if ((identificacion === "") | (nombre === "")) {
       return false;
-    } else {
-      return true;
+    } else if (!regexIdentificacion.test(identificacion)) {
+      return false;
+    } else if (identificacion.length < 9) {
+      return false;
+    }else if (identificacion.length > 9) {
+      return false;
     }
+    return true;
   };
   const reset = () => {
     setSuccess(false);
     setErr(false);
     setInput(false);
+    setErrors(false);
   };
 
   const savePersona = () => {
@@ -63,7 +76,8 @@ const PersonaAdd = (props) => {
       PersonaDataService.create(data)
         .then((response) => {
           setSuccess(true);
-        })
+        }
+        )
         .catch((e) => {
           setErr(true);
         });
@@ -95,6 +109,7 @@ const PersonaAdd = (props) => {
           {errors.identificacion && (
             <p className="text-danger">{errors.identificacion}</p>
           )}
+
         </div>
         <div className="form-group">
           <label htmlFor="nombre">Nombre</label>
@@ -131,7 +146,7 @@ const PersonaAdd = (props) => {
       )}
       {input && (
         <div className="alert alert-danger" role="alert">
-          Por favor llene todos los campos
+          Por favor llene todos los campos o revise sus datos
         </div>
       )}
     </>
