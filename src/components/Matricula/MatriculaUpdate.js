@@ -141,6 +141,16 @@ import Select from "react-select";
             setIdPersona({ idP: selectedOptionPersona.value});
         }
 
+        const validarCupos = () => {
+            if (selectedOptionMateria != null) {
+                if (selectedOptionMateria.cupo == 0) {
+                    return <div className="alert alert-danger" role="alert"> No hay cupos disponibles </div>;
+            }else{
+                return <div className="alert alert-success" role="alert"> Hay {selectedOptionMateria.cupo} cupos disponibles </div>;
+            }
+        };
+        };
+
         return (
             <div className="submit-form">
                 {submitted ? (
@@ -209,8 +219,11 @@ import Select from "react-select";
                                 options={materias.map((materia) => ({
                                     value: materia.id,
                                     label: materia.descripcion,
+                                    cupo: materia.cupos,
                                 }))}
                             />
+                    
+                            {validarCupos()}
                         </div>
                         <div className="form-group">
                             <label htmlFor="idpersona">Persona Actual</label>

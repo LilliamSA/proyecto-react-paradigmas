@@ -3,96 +3,105 @@ import PersonaDataService from "../../services/PersonaService";
 
 //metodos para agregar una persona
 const PersonaAdd = (props) => {
-    const initialPersonaState = {
-        id: null,
-        identificacion: "",
-        nombre: "",
-    };
-    const [persona, setPersona] = useState(initialPersonaState);
-    const [submitted, setSubmitted] = useState(false);
-    const [identificacion, setIdentificacion] = useState({ value: "", error: "" });
-    const [nombre, setNombre] = useState({ value: "", error: "" });
-     
-    const savePersona = () => {
-        var data = {
-            
-        identificacion: persona.identificacion,
-        nombre: persona.nombre,
-        };
-    
-        PersonaDataService.create(data)
-        .then(response => {
-            setPersona({
-            id: response.data.id,
-            identificacion: response.data.identificacion,
-            nombre: response.data.nombre,
-            });
-            setSubmitted(true);
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
-    };
-    const home = () => {
-        window.location.href = "/persona/listar";
-    }
+  const initialPersonaState = {
+    id: null,
+    identificacion: "",
+    nombre: "",
+  };
+  const [success, setSuccess] = useState(false);
+  const [err, setErr] = useState(false);
+  const [input, setInput] = useState(false);
+  const [identificacion, setIdentificacion] = useState("");
+  const [nombre, setNombre] = useState("");
 
-    const handleBlur = () => {
-      if (identificacion.value.required === true) {
-            setIdentificacion({ value: identificacion.value, error: "La identificacion es requerida" });
-        }else if (identificacion.value.length < 10) {
-            setIdentificacion({ value: identificacion.value, error: "La identificacion debe tener 10 digitos" });
-        }else {
-            setIdentificacion({ value: identificacion.value, error: "" });
-        }
+  const validar = () => {
+    if ((identificacion === "") | (nombre === "")) {
+      return false;
+    } else {
+      return true;
     }
-    
-    return (
-        <div className="submit-form">
-        {submitted ? (
-            <div>
-            <h4>Persona agregada correctamente!</h4>
-            <button className="btn btn-success" onClick={home}>
-                Volver
-            </button>
-            </div>
-        ) : (
-            <div>
-            <div className="form-group">
-                <label htmlFor="identificacion">Identificacion</label>
-                <input
-                type="text"
-                className="form-control"
-                id="identificacion"
-                required
-                value={persona.identificacion}
-                onChange={(e) => setPersona({ ...persona, identificacion: e.target.value })}
-                name="identificacion"
-                onBlur={handleBlur}
-                />
-                {identificacion.error && <p className="error">{identificacion.error}</p>}
-            </div>
-            <div className="form-group">
-                <label htmlFor="nombre">Nombre</label>
-                <input
-                type="text"
-                className="form-control"
-                id="nombre"
-                //validar que el campo es requerido que sea string
-                required
-                value={persona.nombre}
-                onChange={(e) => setPersona({ ...persona, nombre: e.target.value })}
-                name="nombre"
-                />
-            </div>
-            <button onClick={savePersona} className="btn btn-success">
-                Agregar
-            </button>
-            </div>
-        )}
+  };
+  const reset = () => {
+    setSuccess(false);
+    setErr(false);
+    setInput(false);
+  };
+
+  const savePersona = () => {
+    reset();
+    var data = {
+      identificacion: identificacion,
+      nombre: nombre,
+    };
+    if (validar()) {
+      PersonaDataService.create(data)
+        .then((response) => {
+          setSuccess(true);
+        })
+        .catch((e) => {
+          setErr(true);
+        });
+    } else {
+      setInput(true);
+    }
+  };
+
+  const home = () => {
+    window.location.href = "/persona/listar";
+  };
+
+  return (
+    <>
+      <div className="submit-form">
+        <div className="form-group">
+          <label htmlFor="identificacion">Identificación</label>
+          <input
+            type="text"
+            className="form-control"
+            id="identificacion"
+            required
+            value={identificacion}
+            onChange={(e) => setIdentificacion(e.target.value)}
+            name="identificacion"
+          />
         </div>
-    );
+        <div className="form-group">
+          <label htmlFor="nombre">Nombre</label>
+          <input
+            type="text"
+            className="form-control"
+            id="nombre"
+            required
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            name="nombre"
+          />
+        </div>
+        <button onClick={savePersona} className="btn btn-success">
+          Agregar
+        </button>
+      </div>
+      {success && (
+        <div className="alert alert-success" role="alert">
+          Persona agregada correctamente
+          <br />
+          <button onClick={home} className="btn btn-warning">
+            Volver
+          </button>
+        </div>
+      )}
+      {err && (
+        <div className="alert alert-danger" role="alert">
+          Error al agregar persona
+        </div>
+      )}
+      {input && (
+        <div className="alert alert-danger" role="alert">
+          Por favor llene todos los campos
+        </div>
+      )}
+    </>
+  );
 };
 
 export default PersonaAdd;
