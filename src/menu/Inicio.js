@@ -12,7 +12,7 @@ const inicio = () => {
                 </div>
             </div>
 
-            <div className="row d-flex justify-content-center mt-2">
+            <div className="row d-flex justify-content-center mt-3">
                 <div className="col-9">
 
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
