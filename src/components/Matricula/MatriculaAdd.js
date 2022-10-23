@@ -61,10 +61,13 @@ const MatriculaAdd = () => {
 
     //validaciones
     const validar = () => {
-    
-        if (selectedOptionPeriodo === null || selectedOptionMateria === null || selectedOptionPersona === null) {
-            return false;
-        }
+    if (idPeriodo === "") {
+        return false;
+    } else if (idMateria === "") {
+        return false;
+    } else if (idPersona === "") {
+        return false;
+    }
         return true;
 
    
@@ -75,15 +78,14 @@ const MatriculaAdd = () => {
         let errors = {};
 
         if (idPeriodo === "") {
-            errors.idPeriodo = "El periodo es requerido";
+            errors.idPeriodo = "El espacio es requerido";
         }
-        if (idMateria === "") {
-            errors.idMateria = "La materia es requerida";
+        else if (idMateria === "") {
+            errors.idMateria = "El espacio es requerido";
         }
-        if (idPersona === "") {
-            errors.idPersona = "La persona es requerida";
+        else if (idPersona === "") {
+            errors.idPersona = "El espacio es requerido";
         }
-
         return errors;
 
     };
