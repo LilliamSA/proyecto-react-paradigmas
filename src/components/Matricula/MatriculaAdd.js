@@ -16,15 +16,21 @@ const MatriculaAdd = () => {
     };
 
     const [matricula, setMatricula] = useState(initialMatriculaState);
-    const [submitted, setSubmitted] = useState(false);
     const [periodos, setPeriodos] = useState([]);
+    const [idPeriodo, setIdPeriodo] = useState("");
+    const [idPersona, setIdPersona] = useState("");
+    const [idMateria, setIdMateria] = useState("");
+
     const [selectedOptionPeriodo, setSelectedOptionPeriodo] = useState(null);
     const [selectedOptionMateria, setSelectedOptionMateria] = useState(null);
     const [selectedOptionPersona, setSelectedOptionPersona] = useState(null);
     const [materias, setMaterias] = useState([]);
     const [personas, setPersonas] = useState([]);
     const [cupo, setCupos] = useState({ value: "", error: "" });
-
+    const [success, setSuccess] = useState(false);
+    const [err, setErr] = useState(false);
+    const [input, setInput] = useState(false);
+    const [errors, setErrors] = useState(false);
     React.useEffect(() => {
         retrievePeriodos();
         retrievePersonas();
@@ -53,29 +59,64 @@ const MatriculaAdd = () => {
 
     };
 
+    //validaciones
+    const validar = () => {
+    
+        if (selectedOptionPeriodo === null || selectedOptionMateria === null || selectedOptionPersona === null) {
+            return false;
+        }
+        return true;
+
+   
+    };
+
+    const validarForm = () => {
+  
+        let errors = {};
+
+        if (idPeriodo === "") {
+            errors.idPeriodo = "El periodo es requerido";
+        }
+        if (idMateria === "") {
+            errors.idMateria = "La materia es requerida";
+        }
+        if (idPersona === "") {
+            errors.idPersona = "La persona es requerida";
+        }
+
+        return errors;
+
+    };
+
+    const reset = () => {
+        setSuccess(false);
+        setErr(false);
+        setInput(false);
+        setErrors(false);
+      };
+
     const saveMatricula = () => {
+        reset();
         var data = {
-            idMateria: matricula.idMateria,
-            idPeriodo: matricula.idPeriodo,
-            idPersona: matricula.idPersona,
+            idMateria: idMateria,
+            idPeriodo: idPeriodo,
+            idPersona: idPersona,
         };
 
-        //HACER VALIDACIONES incluyendo el combo-box
-        MatriculaDataService.create(data)
-        .then(response => {
-
-            setMatricula({
-                id: response.data.id,
-                idMateria: response.data.idMateria,
-                idPeriodo: response.data.idPeriodo,
-                idPersona: response.data.idPersona,
+        if (validar()) {
+            MatriculaDataService.create(data)
+            .then(response => {
+                setSuccess(true);
+               
+            })
+            .catch(e => {
+                setErr(true);
+              
             });
-            setSubmitted(true);
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
+        } else {
+            setInput(true);
+        }
+        
     };
 
     const home = () => {
@@ -84,10 +125,7 @@ const MatriculaAdd = () => {
 
     const handleSelectChange = (selectedOptionPeriodo) => {
         setSelectedOptionPeriodo(selectedOptionPeriodo);
-        setMatricula({ ...matricula, idPeriodo: selectedOptionPeriodo.value });
-        console.log(`Option selected:`, selectedOptionPeriodo);
-        console.log(`Option selected:`, selectedOptionPeriodo.value);
-        console.log(`Option selected:`, matricula.idPeriodo);
+        setIdPeriodo(selectedOptionPeriodo.value);
        
         MateriaDataService.findAllByPeriodoId(selectedOptionPeriodo.value)
         .then(response => {
@@ -99,28 +137,16 @@ const MatriculaAdd = () => {
         });
     };
 
-
-
     const handleSelectChange2 = (selectedOptionMateria) => {
         setSelectedOptionMateria(selectedOptionMateria);
-        setMatricula({ ...matricula, idMateria: selectedOptionMateria.value });
-        console.log(`Option selected:`, selectedOptionMateria);
-        console.log(`Option selected:`, selectedOptionMateria.value);
-        console.log(`Option selected:`, matricula.idMateria);
+        setIdMateria(selectedOptionMateria.value);
     };
 
     const handleSelectChange3 = (selectedOptionPersona) => {
         setSelectedOptionPersona(selectedOptionPersona);
-        setMatricula({ ...matricula, idPersona: selectedOptionPersona.value });
-        console.log(`Option selected:`, selectedOptionPersona);
-        console.log(`Option selected:`, selectedOptionPersona.value);
-        console.log(`Option selected:`, matricula.idPersona);
+        setIdPersona(selectedOptionPersona.value);
     };
 
-    const optionsPeriodo = periodos.map((periodo) => ({
-        value: periodo.id,
-        label: periodo.nombre,
-    }));
 
             //metodo validar cupos de la materia seleccionada traer la info de los cupos y dar un mensaje de error si no hay cupos
     const validarCupos = () => {
@@ -135,16 +161,9 @@ const MatriculaAdd = () => {
 
                
     return (
-        <div className="submit-form">
-            {submitted ? (
-                <div>
-                    <h4>Matricula registrada exitosamente!</h4>
-                    <button className="btn btn-success" onClick={home}>
-                        Volver
-                    </button>
-                </div>
-            ) : (
-                <div>
+        <>
+            <div>
+            <div className="submit-form"></div>
                     <div className="form-group">
                         <label htmlFor="idPeriodo">Periodo</label>
                         <Select
@@ -154,7 +173,11 @@ const MatriculaAdd = () => {
                                 value: periodo.id,
                                 label: periodo.descripcion,
                             }))}
+                            onBlur={() => setErrors(validarForm())}
                         />
+                        {errors.idPeriodo && (
+                            <p className="text-danger">{errors.idPeriodo}</p>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -168,10 +191,13 @@ const MatriculaAdd = () => {
                                 label: materia.descripcion,
                                 cupo: materia.cupos,
                             }))}
+                            onBlur={() => setErrors(validarForm())}
                         />
+                        {errors.idMateria && (
+                            <p className="text-danger">{errors.idMateria}</p>
+                        )}
                 
-                        {validarCupos()}
-                        
+                        {validarCupos()}    
                     </div>
                     <div className="form-group">
                         <label htmlFor="idPersona">Persona</label>
@@ -183,17 +209,36 @@ const MatriculaAdd = () => {
                                 label: persona.nombre,
         
                             }))}
+                            onBlur={()=>setErrors(validarForm())}
                         />
+                        {errors.idPersona && <p className="text-danger">{errors.idPersona}</p>}
                     </div>
 
                     <button onClick={saveMatricula} className="btn btn-success">
                         Registrar
                     </button>
                 </div>
-            )}
-        </div>
+ {success && (
+    <div className="alert alert-success" role="alert">
+      Matricula exitosa!
+      <br />
+      <button onClick={home} className="btn btn-warning">
+        Volver
+      </button>
+    </div>
+  )}
+  {err && (
+    <div className="alert alert-danger" role="alert">
+      Error al hacer la matricula
+    </div>
+  )}
+  {input && (
+    <div className="alert alert-danger" role="alert">
+      Por favor llene todos los campos o revise sus datos
+    </div>
+  )}
+        </>
     );
-}
-
+};
 
 export default MatriculaAdd;
