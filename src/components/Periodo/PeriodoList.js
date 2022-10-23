@@ -1,12 +1,12 @@
-import React from 'react';  
+import React from 'react';
 import PeriodoDataService from "../../services/PeriodoService";
 import { Link } from 'react-router-dom';
 const PeriodoList = () => {
 
     const [periodos, setPeriodos] = React.useState([]);
 
-     //obtener todas los periodos
-     React.useEffect(() => {
+    //obtener todas los periodos
+    React.useEffect(() => {
         retrievePeriodos();
     }, []);
 
@@ -28,6 +28,7 @@ const PeriodoList = () => {
         if(window.confirm("¿Está seguro que desea eliminar el periodo?")){
             PeriodoDataService.deletePeriodo(id)
             .then(response => {
+                setPeriodos(response.data);
                 console.log(response.data);
                 retrievePeriodos();
                 alert("Periodo eliminado con éxito");
@@ -37,13 +38,11 @@ const PeriodoList = () => {
                 console.log(e);
                 alert("No se pudo eliminar el periodo");
             });
-        }
     };
-    
 
-    //metodo que redirija a PeriodoUpdate para usar el formulario
+    };
 
-    return(
+    return (
         <div className="container">
             <div className="list row">
                 <div className="col-md-12">
@@ -63,7 +62,7 @@ const PeriodoList = () => {
                                     <td>{periodo.id}</td>
                                     <td>{periodo.descripcion}</td>
                                     <td>
-                                    <Link to={"/periodo/editar/" + periodo.id} className="btn btn-success"> Editar </Link>
+                                        <Link to={"/periodo/editar/" + periodo.id} className="btn btn-success"> Editar </Link>
                                     </td>
                                     <td>
                                         <button className="btn btn-danger" onClick={() => deletePeriodo(periodo.id)}>Eliminar</button>
