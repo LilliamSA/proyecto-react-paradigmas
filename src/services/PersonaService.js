@@ -35,6 +35,11 @@ class PersonaService {
   findById(id) {
     return http.get(`/persona/${id}`);
   }
+
+  deleteVerificar = (id) => {
+    return http.delete(`/persona/${id}`);
+  }
+
 }
 
 export default new PersonaService();

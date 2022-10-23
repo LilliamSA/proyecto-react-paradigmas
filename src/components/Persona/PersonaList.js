@@ -2,13 +2,6 @@
 import React from 'react';  
 import { Link } from 'react-router-dom';
 import PersonaDataService from '../../services/PersonaService';
-
-
-
-
-
-
-
 //crear una tabla
 const PersonaList = (props) => {
     const [personas, setPersonas] = React.useState([]);
@@ -36,13 +29,15 @@ const PersonaList = (props) => {
     //remove persona by id con mensaje de confirmacion
     const deletePersona = (id) => {
         if (window.confirm("¿Está seguro que desea eliminar esta persona?")) {
-            PersonaDataService.delete(id)
+            PersonaDataService.deleteVerificar(id)
             .then(response => {
                 console.log(response.data);
                 retrievePersonas();
+                alert("Persona eliminada con éxito");
             })
             .catch(e => {
                 console.log(e);
+                alert("No se pudo eliminar la persona");
             });
         }
     };
