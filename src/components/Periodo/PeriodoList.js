@@ -22,19 +22,24 @@ const PeriodoList = () => {
         });
     };
 
-    //remove periodo by id con mensaje de confirmacion
+    //eliminar un periodo por id dando alerta de confirmacion y error
     const deletePeriodo = (id) => {
-        if (window.confirm("¿Está seguro que desea eliminar este periodo?")) {
-            PeriodoDataService.delete(id)
+      //poner alerta de confirmacion y error en caso de que no se pueda eliminar
+        if(window.confirm("¿Está seguro que desea eliminar el periodo?")){
+            PeriodoDataService.deletePeriodo(id)
             .then(response => {
                 console.log(response.data);
                 retrievePeriodos();
+                alert("Periodo eliminado con éxito");
+
             })
             .catch(e => {
                 console.log(e);
+                alert("No se pudo eliminar el periodo");
             });
         }
-    }
+    };
+    
 
     //metodo que redirija a PeriodoUpdate para usar el formulario
 

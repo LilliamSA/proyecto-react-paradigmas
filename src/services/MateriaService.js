@@ -44,6 +44,7 @@ class MateriaService {
         return http.get(`/materia?id=${id}`);
     }
 
+
 }
 
 export default new MateriaService();

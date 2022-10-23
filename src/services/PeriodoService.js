@@ -35,6 +35,9 @@ class PeriodoService {
     findById(id) {
         return http.get(`/periodo/${id}`);
     }
+
+    deletePeriodo = (id) => {
+        return http.delete(`/periodo/${id}`);}
 }
 
 
