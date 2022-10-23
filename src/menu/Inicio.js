@@ -8,7 +8,7 @@ const inicio = () => {
         <div className="container">
             <div className="row text-center mt-5">
                 <div className="col-md-12">
-                    <h1>Bienvenido al Sistema de Matriculas!</h1>
+                    <h1>Bienvenido al Sistema de Matricula!</h1>
                 </div>
             </div>
 

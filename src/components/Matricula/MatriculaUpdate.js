@@ -49,7 +49,7 @@ const MatriculaUpdate = () => {
       return false;
     }
     else if (selectedOptionPeriodo === null || selectedOptionMateria === null || selectedOptionPersona === null) {
-        return false;
+      return false;
     }
     return true;
   };
@@ -59,20 +59,20 @@ const MatriculaUpdate = () => {
 
     if (idPeriodo === "") {
       errors.idPeriodo = "El periodo es requerido";
-    }else if (selectedOptionPeriodo === null) {
-        errors.idPeriodo = "El periodo es requerido";
+    } else if (selectedOptionPeriodo === null) {
+      errors.idPeriodo = "El periodo es requerido";
     }
 
     if (idMateria === "") {
       errors.idMateria = "La materia es requerida";
-    }else if (selectedOptionMateria === null) {
-        errors.idMateria = "La materia es requerida";
+    } else if (selectedOptionMateria === null) {
+      errors.idMateria = "La materia es requerida";
     }
 
     if (idPersona === "") {
-        errors.idPersona = "La persona es requerida";
-    }else if (selectedOptionPersona === null) {
-        errors.idPersona = "La persona es requerida";
+      errors.idPersona = "La persona es requerida";
+    } else if (selectedOptionPersona === null) {
+      errors.idPersona = "La persona es requerida";
     }
 
     return errors;
@@ -93,20 +93,20 @@ const MatriculaUpdate = () => {
       idPersona: idPersona.idP,
     };
     if (validar()) {
-        MatriculaDataService.update(id, data)
+      MatriculaDataService.update(id, data)
         .then((response) => {
-            setSuccess(true);
-            console.log(response.data);
+          setSuccess(true);
+          console.log(response.data);
         })
         .catch((e) => {
-            setErr(true);
-            console.log(e);
+          setErr(true);
+          console.log(e);
         });
     } else {
-        setErrors(true);
-        setInput(true);
+      setErrors(true);
+      setInput(true);
     }
-    };
+  };
 
   const home = () => {
     window.location.href = "/matricula/listar";
@@ -320,7 +320,7 @@ const MatriculaUpdate = () => {
       )}
       {err && (
         <div className="alert alert-danger" role="alert">
-          Error, no se puede matricular un curso que no tiene cupos disponibles
+          Error, no se puede matricular un curso que no tiene cupos disponibles o ya se encuentra matriculado en la materia seleccionada
         </div>
       )}
       {input && (
