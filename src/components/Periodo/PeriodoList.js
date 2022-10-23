@@ -22,43 +22,20 @@ const PeriodoList = () => {
             });
     };
 
-    // delete periodo by id con alerta de confirmacion y si el delete retorna null muestra una alerta de error que dice "No se pudo eliminar el periodo, tiene matriculas asociadas"
-    /*const deletePeriodo = (id) => {
+    const deletePeriodo = (id) => {
 
-        if (window.confirm("¿Está seguro que desea eliminar el periodo?")) {
+        if (window.confirm("¿Está seguro que desea eliminar este periodo?")) {
             PeriodoDataService.delete(id)
                 .then(response => {
-                    console.log("DATA DEL DELETE", response.data);
-                     retrievePeriodos();
-
+                    console.log(response.data);
+                    retrievePeriodos();
                 })
                 .catch(e => {
+                    alert("No se puede eliminar el periodo porque tiene materias asociadas");
                     console.log(e);
                 });
         }
-    };*/
 
-    const deletePeriodo = (id) => {
-        // valide que el periodo no tenga matriculas asociadas
-        PeriodoDataService.MateriaconPeriodo(id)
-            .then(response => {
-                console.log("DATA DEL DELETE", response.data);
-                if (response.data.length > 0) {
-                    alert("No se pudo eliminar el periodo, tiene matriculas asociadas");
-                } else {
-                    if (window.confirm("¿Está seguro que desea eliminar el periodo?")) {
-                        PeriodoDataService.delete(id)
-                            .then(response => {
-                                console.log("DATA DEL DELETE", response.data);
-                                retrievePeriodos();
-
-                            })
-                            .catch(e => {
-                                console.log(e);
-                            });
-                    }
-                }
-            })
     }
 
     //metodo que redirija a PeriodoUpdate para usar el formulario
