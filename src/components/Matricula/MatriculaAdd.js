@@ -231,7 +231,7 @@ const MatriculaAdd = () => {
   )}
   {err && (
     <div className="alert alert-danger" role="alert">
-      Error al hacer la matricula
+                Error, no se puede matricular un curso que no tiene cupos disponibles
     </div>
   )}
   {input && (
