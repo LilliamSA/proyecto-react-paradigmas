@@ -163,83 +163,102 @@ const MatriculaAdd = () => {
 
 
     return (
-        <>
-            <div>
-                <div className="submit-form"></div>
-                <div className="form-group">
-                    <label htmlFor="idPeriodo">Periodo</label>
-                    <Select
-                        value={selectedOptionPeriodo}
-                        onChange={handleSelectChange}
-                        options={periodos.map((periodo) => ({
-                            value: periodo.id,
-                            label: periodo.descripcion,
-                        }))}
-                        onBlur={() => setErrors(validarForm())}
-                    />
-                    {errors.idPeriodo && (
-                        <p className="text-danger">{errors.idPeriodo}</p>
-                    )}
+
+        <div className="container mt-5">
+            <h1 className="text-center mb-4">Formulario para agregar una matricula</h1>
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <div className="submit-form"></div>
+                    <div className="form-group">
+                        <label htmlFor="idPeriodo">Periodo</label>
+                        <Select
+                            className="mt-2 mb-2"
+                            value={selectedOptionPeriodo}
+                            onChange={handleSelectChange}
+                            options={periodos.map((periodo) => ({
+                                value: periodo.id,
+                                label: periodo.descripcion,
+                            }))}
+                            onBlur={() => setErrors(validarForm())}
+                        />
+                        {errors.idPeriodo && (
+                            <p className="text-danger">{errors.idPeriodo}</p>
+                        )}
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="idMateria">Materia</label>
+                        <Select
+                            className="mt-2 mb-2"
+                            value={selectedOptionMateria}
+                            onChange={handleSelectChange2}
+                            options={materias.map((materia) => ({
+                                value: materia.id,
+                                label: materia.descripcion,
+                                cupo: materia.cupos,
+                            }))}
+                            onBlur={() => setErrors(validarForm())}
+                        />
+                        {errors.idMateria && (
+                            <p className="text-danger">{errors.idMateria}</p>
+                        )}
+
+                        {validarCupos()}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="idPersona">Persona</label>
+                        <Select
+                            className="mt-2 mb-2"
+                            value={selectedOptionPersona}
+                            onChange={handleSelectChange3}
+                            options={personas.map((persona) => ({
+                                value: persona.id,
+                                label: persona.nombre,
+
+                            }))}
+                            onBlur={() => setErrors(validarForm())}
+                        />
+                        {errors.idPersona && <p className="text-danger">{errors.idPersona}</p>}
+                    </div>
+
                 </div>
-
-                <div className="form-group">
-                    <label htmlFor="idMateria">Materia</label>
-                    <Select
-
-                        value={selectedOptionMateria}
-                        onChange={handleSelectChange2}
-                        options={materias.map((materia) => ({
-                            value: materia.id,
-                            label: materia.descripcion,
-                            cupo: materia.cupos,
-                        }))}
-                        onBlur={() => setErrors(validarForm())}
-                    />
-                    {errors.idMateria && (
-                        <p className="text-danger">{errors.idMateria}</p>
-                    )}
-
-                    {validarCupos()}
+                <div className="row justify-content-center mt-4 mb-4">
+                    <div className="col-md-6 text-center">
+                        <button onClick={saveMatricula} className="btn btn-success btn-lg">
+                            Registrar
+                        </button>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="idPersona">Persona</label>
-                    <Select
-                        value={selectedOptionPersona}
-                        onChange={handleSelectChange3}
-                        options={personas.map((persona) => ({
-                            value: persona.id,
-                            label: persona.nombre,
-
-                        }))}
-                        onBlur={() => setErrors(validarForm())}
-                    />
-                    {errors.idPersona && <p className="text-danger">{errors.idPersona}</p>}
+                <div className="row justify-content-center mt-4 mb-4">
+                    <div className="col-md-6 text-center">
+                        {success && (
+                            <div className="alert alert-success text-center" role="alert">
+                                Matricula exitosa!
+                                <br />
+                                <button onClick={home} className="btn btn-warning">
+                                    Volver
+                                </button>
+                            </div>
+                        )
+                        }
+                        {
+                            err && (
+                                <div className="alert alert-danger text-center" role="alert">
+                                    Error, no se puede matricular un curso que no tiene cupos disponibles o ya se encuentra matriculado en la materia seleccionada
+                                </div>
+                            )
+                        }
+                        {
+                            input && (
+                                <div className="alert alert-danger text-center" role="alert">
+                                    Por favor llene todos los campos o revise sus datos
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
-
-                <button onClick={saveMatricula} className="btn btn-success">
-                    Registrar
-                </button>
             </div>
-            {success && (
-                <div className="alert alert-success" role="alert">
-                    Matricula exitosa!
-                    <br />
-                    <button onClick={home} className="btn btn-warning">
-                        Volver
-                    </button>
-                </div>
-            )}
-            {err && (
-                <div className="alert alert-danger" role="alert">
-                    Error, no se puede matricular un curso que no tiene cupos disponibles o ya se encuentra matriculado en la materia seleccionada
-                </div>
-            )}
-            {input && (
-                <div className="alert alert-danger" role="alert">
-                    Por favor llene todos los campos o revise sus datos
-                </div>
-            )}
-        </>
+        </div>
     );
 };
 
