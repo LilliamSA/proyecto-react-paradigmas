@@ -66,48 +66,71 @@ const PeriodoAdd = () => {
   };
 
   return (
-    <>
-      <div className="submit-form">
-        <div className="form-group">
-          <label htmlFor="descripcion">Periodo</label>
-          <input
-            type="text"
-            className="form-control"
-            id="descripcion"
-            required
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            name="descripcion"
-            onBlur={() => setErrors(validarForm())}
-          />
-          {errors.descripcion && (
-            <p className="text-danger">{errors.descripcion}</p>
-          )}
+
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">Formulario para agregar un periodo</h1>
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="submit-form"></div>
+          <div className="submit-form">
+            <div className="form-group">
+              <label htmlFor="descripcion">Nombre del Periodo</label>
+              <input
+                type="text"
+                className="form-control mt-2 mb-2"
+                id="descripcion"
+                required
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+                name="descripcion"
+                onBlur={() => setErrors(validarForm())}
+              />
+              {errors.descripcion && (
+                <p className="text-danger">{errors.descripcion}</p>
+              )}
+            </div>
+          </div>
+
         </div>
-        <button onClick={savePeriodo} className="btn btn-success">
-          Agregar
-        </button>
+        <div className="row justify-content-center mt-4 mb-4">
+          <div className="col-md-6 text-center">
+            <button onClick={savePeriodo} className="btn btn-success btn-lg">
+              Agregar
+            </button>
+          </div>
+        </div>
+        <div className="row justify-content-center mt-4 mb-4">
+          <div className="col-md-6 text-center">
+            {
+              success && (
+                <div className="alert alert-success text-center" role="alert">
+                  Periodo agregado con éxito!
+                  <br />
+                  <button onClick={home} className="btn btn-warning">
+                    Volver
+                  </button>
+                </div>
+              )
+            }
+            {
+              err && (
+                <div className="alert alert-danger text-center" role="alert">
+                  Error al agregar el periodo
+                </div>
+              )
+            }
+            {
+              input && (
+                <div className="alert alert-danger text-center" role="alert">
+                  Por favor llene todos los campos o revise sus datos
+                </div>
+              )
+            }
+          </div>
+        </div>
       </div>
-      {success && (
-        <div className="alert alert-success" role="alert">
-          Periodo agregado con éxito!
-          <br />
-          <button onClick={home} className="btn btn-warning">
-            Volver
-          </button>
-        </div>
-      )}
-      {err && (
-        <div className="alert alert-danger" role="alert">
-          Error al agregar el periodo
-        </div>
-      )}
-      {input && (
-        <div className="alert alert-danger" role="alert">
-          Por favor llene todos los campos o revise sus datos
-        </div>
-      )}
-    </>
+    </div>
+
   );
 };
 
