@@ -69,9 +69,7 @@ const NavPrincipal = () => {
 				aria-labelledby="navbarDropdownMenuLink"
 			  >
 				<li>
-				  <Link className="dropdown-item" to="/periodo">
 					Periodo
-				  </Link>
 				  <ul className="dropdown sub-menu">
 				  <Link className="dropdown-item" to="/periodo/agregar">
 					Agregar nuevo periodo
@@ -82,9 +80,7 @@ const NavPrincipal = () => {
 				</ul>
 				</li>
 				<li>
-				  <Link className="dropdown-item" to="/materia">
 					Materia
-				  </Link>
 				  <ul className="dropdown sub-menu">
 				  <Link className="dropdown-item" to="/materia/agregar">
 					Agregar nuevo materia
@@ -95,9 +91,7 @@ const NavPrincipal = () => {
 				</ul>
 				</li>
 				<li>
-				  <Link className="dropdown-item" to="/persona">
 					Persona
-				  </Link>
 				  <ul className="dropdown sub-menu">
 				  <Link className="dropdown-item" to="/persona/agregar">
 					Agregar nueva persona
