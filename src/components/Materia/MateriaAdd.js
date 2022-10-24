@@ -32,9 +32,9 @@ const MateriaAdd = () => {
             return false;
         } else if (!regexDescripcion.test(descripcion)) {
             return false;
-        }else if (idPeriodo === "") {
+        } else if (idPeriodo === "") {
             return false;
-        }else if (selectedOption === null) {
+        } else if (selectedOption === null) {
             return false;
         }
 
@@ -62,7 +62,7 @@ const MateriaAdd = () => {
 
         if (idPeriodo === "") {
             errors.idPeriodo = "El periodo es requerido";
-        }else if (selectedOption === null) {
+        } else if (selectedOption === null) {
             errors.idPeriodo = "El periodo es requerido";
 
         }
@@ -76,7 +76,7 @@ const MateriaAdd = () => {
         setErr(false);
         setInput(false);
         setErrors(false);
-      };
+    };
 
     React.useEffect(() => {
         retrievePeriodos();
@@ -84,13 +84,13 @@ const MateriaAdd = () => {
 
     const retrievePeriodos = () => {
         PeriodoDataService.getAll()
-        .then(response => {
-            setPeriodos(response.data);
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
+            .then(response => {
+                setPeriodos(response.data);
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
     };
 
     const saveMateria = () => {
@@ -102,16 +102,16 @@ const MateriaAdd = () => {
         };
         if (validar()) {
             MateriaDataService.create(data)
-            .then(response => {
-                setSuccess(true);
-            })
-            .catch((e) => {
-              setErr(true);
-            });
+                .then(response => {
+                    setSuccess(true);
+                })
+                .catch((e) => {
+                    setErr(true);
+                });
         } else {
-          setInput(true);
+            setInput(true);
         }
-      };
+    };
 
 
     const home = () => {
@@ -126,83 +126,95 @@ const MateriaAdd = () => {
 
 
     return (
-        <>
-            <div>
-            <div className="submit-form"></div>
-            <div className="form-group">
-                <label htmlFor="descripcion">Descripcion</label>
-                <input
-                type="text"
-                className="form-control"
-                id="descripcion"
-                required
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-                name="descripcion"
-                onBlur={() => setErrors(validarForm())}
-                />
-                {errors.descripcion && (
-                  <p className="text-danger">{errors.descripcion}</p>
-                )} 
-            </div>
-            <div className="form-group">
-                <label htmlFor="cupos">Cupos</label>
-                <input
-                type="text"
-                className="form-control"
-                id="cupos"
-                required
-                value={cupos}
-                onChange={(e) => setCupos(e.target.value)}
-                name="cupos"
-                onBlur={() => setErrors(validarForm())}
-                />
-                {errors.cupos && (
-                  <p className="text-danger">{errors.cupos}</p>
-                )}
-            </div>
-            <div className="form-group">
-                <label htmlFor="id_periodo">Periodo</label>
-                <Select
 
-                    value={selectedOption}
-                    onChange={handleChange}
-                    id="id_periodo"
-                    name="id_periodo"
-                    options={periodos.map((periodo) => ({
-                        value: periodo.id,
-                        label: periodo.descripcion,
-                    }))}
-                    onBlur={() => setErrors(validarForm())}
-                />
-                {errors.idPeriodo && (
-                    <p className="text-danger">{errors.idPeriodo}</p>
-                )}
+        <div className="container mt-5">
+            <h1 className="text-center mb-4">Formulario para agregar una materia</h1>
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <div className="submit-form"></div>
+                    <div className="form-group">
+                        <label htmlFor="descripcion">Descripcion</label>
+                        <input
+                            type="text"
+                            className="form-control mt-2 mb-2"
+                            id="descripcion"
+                            required
+                            value={descripcion}
+                            onChange={(e) => setDescripcion(e.target.value)}
+                            name="descripcion"
+                            onBlur={() => setErrors(validarForm())}
+                        />
+                        {errors.descripcion && (
+                            <p className="text-danger">{errors.descripcion}</p>
+                        )}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="cupos">Cupos</label>
+                        <input
+                            type="text"
+                            className="form-control mt-2 mb-2"
+                            id="cupos"
+                            required
+                            value={cupos}
+                            onChange={(e) => setCupos(e.target.value)}
+                            name="cupos"
+                            onBlur={() => setErrors(validarForm())}
+                        />
+                        {errors.cupos && (
+                            <p className="text-danger">{errors.cupos}</p>
+                        )}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="id_periodo">Periodo</label>
+                        <Select
+
+                            value={selectedOption}
+                            onChange={handleChange}
+                            id="id_periodo"
+                            name="id_periodo mt-2 mb-2"
+                            options={periodos.map((periodo) => ({
+                                value: periodo.id,
+                                label: periodo.descripcion,
+                            }))}
+                            onBlur={() => setErrors(validarForm())}
+                        />
+                        {errors.idPeriodo && (
+                            <p className="text-danger">{errors.idPeriodo}</p>
+                        )}
+                    </div>
+                </div>
             </div>
-            <button onClick={saveMateria} className="btn btn-success">
-                Agregar
-            </button>
+            <div className="row justify-content-center mt-4 mb-4">
+                <div className="col-md-6 text-center">
+                    <button onClick={saveMateria} className="btn btn-success btn-lg">
+                        Agregar
+                    </button>
+                </div>
             </div>
-            {success && (
-        <div className="alert alert-success" role="alert">
-          Materia agregada con éxito!
-          <br />
-          <button onClick={home} className="btn btn-warning">
-            Volver
-          </button>
+            <div className="row justify-content-center mt-4 mb-4">
+                <div className="col-md-6 text-center">
+                    {success && (
+                        <div className="alert alert-success text-center" role="alert">
+                            Materia agregada con éxito!
+                            <br />
+                            <button onClick={home} className="btn btn-warning">
+                                Volver
+                            </button>
+                        </div>
+                    )}
+                    {err && (
+                        <div className="alert alert-danger text-center" role="alert">
+                            Error al agregar la materia
+                        </div>
+                    )}
+                    {input && (
+                        <div className="alert alert-danger text-center" role="alert">
+                            Por favor llene todos los campos o revise sus datos
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
-      )}
-      {err && (
-        <div className="alert alert-danger" role="alert">
-          Error al agregar la materia
-        </div>
-      )}
-      {input && (
-        <div className="alert alert-danger" role="alert">
-          Por favor llene todos los campos o revise sus datos
-        </div>
-      )}
-    </>
-  );
+    );
 };
 export default MateriaAdd;
