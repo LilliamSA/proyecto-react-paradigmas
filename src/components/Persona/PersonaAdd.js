@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import PersonaDataService from "../../services/PersonaService";
 
-//metodos para agregar una persona
 const PersonaAdd = (props) => {
   const initialPersonaState = {
     id: null,
     identificacion: "",
     nombre: "",
   };
+
+  //variables
   const [success, setSuccess] = useState(false);
   const [err, setErr] = useState(false);
   const [input, setInput] = useState(false);
@@ -15,8 +16,9 @@ const PersonaAdd = (props) => {
   const [nombre, setNombre] = useState("");
   const [errors, setErrors] = useState(false);
 
-  const validacionesForm = () => {
-    let errors = {};
+ //valida dando mensajes en los inputs
+  const validacionesForm = () => { 
+    let errors = {}; //sirve para guardar los errores
     //letras y numeros
     let regexIdentificacion = /^[a-zA-Z0-9]+$/;
     let regexNombre = /^[a-zA-Z ]+$/;
@@ -42,7 +44,8 @@ const PersonaAdd = (props) => {
 
     return errors;
   };
-
+ 
+  //valida dando mensajes en el boton
   const validar = () => {
     let errors = {};
     //letras y numeros
@@ -61,15 +64,17 @@ const PersonaAdd = (props) => {
     }
     return true;
   };
-
+ 
+  //limpiar los inputs
   const reset = () => {
-    setSuccess(false);
-    setErr(false);
+    setSuccess(false); 
+    setErr(false); 
     setInput(false);
     setErrors(false);
   };
-
-  const savePersona = () => {
+  
+  //crear la persona
+  const savePersona = () => { 
     reset();
     var data = {
       identificacion: identificacion,

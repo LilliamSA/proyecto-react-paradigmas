@@ -6,12 +6,15 @@ const PeriodoAdd = () => {
     id: null,
     descripcion: "",
   };
+
+  //agregamos los estados
   const [descripcion, setDescripcion] = useState("");
   const [success, setSuccess] = useState(false);
   const [err, setErr] = useState(false);
   const [input, setInput] = useState(false);
   const [errors, setErrors] = useState(false);
 
+  //validaciones
   const validar = () => {
     let regexDescripcion = /^[a-zA-Z0-9 ]+$/;
     if (descripcion === "") {
@@ -22,6 +25,7 @@ const PeriodoAdd = () => {
     return true;
   };
 
+  //validar el formulario
   const validarForm = () => {
     //que acepte letras, numeros y espacios en blanco
     let regexDescripcion = /^[a-zA-Z0-9 ]+$/;
@@ -36,6 +40,7 @@ const PeriodoAdd = () => {
     return errors;
   };
 
+  //limpiar el los campos
   const reset = () => {
     setSuccess(false);
     setErr(false);
@@ -43,6 +48,7 @@ const PeriodoAdd = () => {
     setErrors(false);
   };
 
+  //crear el periodo
   const savePeriodo = () => {
     reset();
     var data = {
@@ -66,7 +72,6 @@ const PeriodoAdd = () => {
   };
 
   return (
-
     <div className="container mt-5">
       <h1 className="text-center mb-4">Formulario para agregar un periodo</h1>
       <div className="row justify-content-center">
@@ -83,14 +88,12 @@ const PeriodoAdd = () => {
                 value={descripcion}
                 onChange={(e) => setDescripcion(e.target.value)}
                 name="descripcion"
-                onBlur={() => setErrors(validarForm())}
-              />
+                onBlur={() => setErrors(validarForm())}/>
               {errors.descripcion && (
                 <p className="text-danger">{errors.descripcion}</p>
               )}
             </div>
           </div>
-
         </div>
         <div className="row justify-content-center mt-4 mb-4">
           <div className="col-md-6 text-center">
@@ -101,8 +104,7 @@ const PeriodoAdd = () => {
         </div>
         <div className="row justify-content-center mt-4 mb-4">
           <div className="col-md-6 text-center">
-            {
-              success && (
+            {success && (
                 <div className="alert alert-success text-center" role="alert">
                   Periodo agregado con éxito!
                   <br />
@@ -110,28 +112,21 @@ const PeriodoAdd = () => {
                     Volver
                   </button>
                 </div>
-              )
-            }
-            {
-              err && (
+              )}
+            {err && (
                 <div className="alert alert-danger text-center" role="alert">
                   Error al agregar el periodo
                 </div>
-              )
-            }
-            {
-              input && (
+              )}
+            {input && (
                 <div className="alert alert-danger text-center" role="alert">
                   Por favor llene todos los campos o revise sus datos
                 </div>
-              )
-            }
+              )}
           </div>
         </div>
       </div>
     </div>
-
   );
 };
-
 export default PeriodoAdd;

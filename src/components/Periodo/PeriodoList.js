@@ -39,7 +39,6 @@ const PeriodoList = () => {
 
     };
 
-
     return (
         <div className="container mt-5">
             <h2 className="text-center mb-5">Lista de periodos</h2>
@@ -74,7 +73,6 @@ const PeriodoList = () => {
         </div>
     )
 }
-
 export default PeriodoList;
 
 

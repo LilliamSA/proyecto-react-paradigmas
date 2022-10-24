@@ -3,8 +3,11 @@ import PersonaDataService from "../../services/PersonaService";
 import { useParams } from "react-router-dom";
 
 const PersonaUpdate = () => {
-  const { id } = useParams();
-  const URL = "http://localhost:8080/persona/" + id;
+  
+  const { id } = useParams(); //obtiene el id de la url
+  const URL = "http://localhost:8080/persona/" + id; //url para obtener la persona por id
+
+
   //traer la informacion de la persona por id seleccionada en la tabla
   const [success, setSuccess] = useState(false);
   const [err, setErr] = useState(false);
@@ -17,6 +20,7 @@ const PersonaUpdate = () => {
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState(false);
 
+  //valida dando mensajes en los inputs
   const validacionesForm = () => {
     let errors = {};
     //letras y numeros
@@ -44,31 +48,34 @@ const PersonaUpdate = () => {
 
     return errors;
   };
-  useEffect(() => {
-    fetch(URL)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
+
+
+  useEffect(() => { //se ejecuta cuando se carga la pagina
+    fetch(URL) //obtiene la persona por id
+      .then((res) => res.json()) //convierte la respuesta a json
+      .then( //se ejecuta cuando la respuesta es exitosa
+        (result) => { //result es el json
+          setIsLoaded(true); //indica que la respuesta fue exitosa
           setPersona(result);
-          setIdentificacion(result.identificacion);
-          setNombre(result.nombre);
-          setIdPersona(result.idPersona);
+          setIdentificacion(result.identificacion); 
+          setNombre(result.nombre); 
+          setIdPersona(result.idPersona); 
         },
-        (error) => {
+        (error) => { //se ejecuta cuando la respuesta es erronea
           setIsLoaded(true);
           setError(error);
         }
       );
   }, [URL]);
 
-  const reset = () => {
+  const reset = () => { //limpia los inputs
     setSuccess(false);
     setErr(false);
     setInput(false);
     setErrors(false);
   };
-
+  
+  //valida los inputs
   const validar = () => {
     let errors = {};
     //letras y numeros
@@ -87,23 +94,24 @@ const PersonaUpdate = () => {
     }
     return true;
   };
-
+ 
+  //actualiza la persona
   const updatePersona = () => {
     reset();
-    var data = {
+    var data = { //una variable con la informacion de la persona
       identificacion: identificacion,
       nombre: nombre,
     };
-    if (validar()) {
-      PersonaDataService.update(id, data)
-        .then((response) => {
+    if (validar()) { //si los datos son validos
+      PersonaDataService.update(id, data) 
+        .then((response) => { //se ejecuta cuando la respuesta es exitosa
           setSuccess(true);
         })
         .catch((e) => {
-          setErr(true);
+          setErr(true); //se ejecuta cuando la respuesta es erronea
         });
     } else {
-      setInput(true);
+      setInput(true); //si los datos no son validos muestra un mensaje
     }
   };
 
@@ -112,7 +120,6 @@ const PersonaUpdate = () => {
   };
 
   return (
-
     <div className="container mt-5">
       <h1 className="text-center mb-4">Formulario para actualizar una persona</h1>
       <div className="row justify-content-center">
@@ -145,12 +152,10 @@ const PersonaUpdate = () => {
                   value={nombre}
                   onChange={(e) => setNombre(e.target.value)}
                   name="nombre"
-                  onBlur={() => setErrors(validacionesForm())}
-                />
+                  onBlur={() => setErrors(validacionesForm())}/>
                 {errors.nombre && <p className="text-danger">{errors.nombre}</p>}
               </div>
             </div>
-
           </div>
           <div className="row justify-content-center mt-4 mb-4">
             <div className="col-md-6 text-center">
@@ -170,7 +175,7 @@ const PersonaUpdate = () => {
                   </button>
                 </div>
               )}
-              {err && (
+              {err && ( 
                 <div className="alert alert-danger text-center" role="alert">
                   Error al actualizar persona
                 </div>
@@ -185,8 +190,6 @@ const PersonaUpdate = () => {
         </div>
       </div>
     </div>
-
   );
 };
-
 export default PersonaUpdate;

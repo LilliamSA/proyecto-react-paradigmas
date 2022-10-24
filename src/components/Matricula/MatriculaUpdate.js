@@ -188,15 +188,13 @@ const MatriculaUpdate = () => {
       if (selectedOptionMateria.cupo == 0) {
         return (
           <div className="alert alert-danger" role="alert">
-            {" "}
-            No hay cupos disponibles{" "}
+            No hay cupos disponibles.
           </div>
         );
       } else {
         return (
           <div className="alert alert-success" role="alert">
-            {" "}
-            Hay {selectedOptionMateria.cupo} cupos disponibles{" "}
+            Hay {selectedOptionMateria.cupo} cupos disponibles.
           </div>
         );
       }

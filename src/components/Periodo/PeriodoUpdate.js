@@ -3,9 +3,9 @@ import PeriodoDataService from "../../services/PeriodoService";
 import { useParams } from "react-router-dom";
 
 const PeriodoUpdate = () => {
-  const { id } = useParams();
-  const URL = "http://localhost:8080/periodo/" + id;
-  //traer la informacion de la persona por id seleccionada en la tabla
+  const { id } = useParams(); //obtenemos el id del periodo a editar
+  const URL = "http://localhost:8080/periodo/" + id; //url para obtener el periodo por id
+  
 
   const [periodo, setPeriodo] = useState({});
   const [error, setError] = useState(null);
@@ -89,9 +89,6 @@ const PeriodoUpdate = () => {
   };
 
   return (
-
-
-
     <div className="container mt-5">
       <h1 className="text-center mb-4">Formulario para actualizar un periodo</h1>
       <div className="row justify-content-center">
@@ -119,8 +116,7 @@ const PeriodoUpdate = () => {
                 value={descripcion}
                 onChange={(e) => setDescripcion(e.target.value)}
                 name="descripcion"
-                onBlur={() => setErrors(validarForm())}
-              />
+                onBlur={() => setErrors(validarForm())}/>
               {errors.descripcion && (
                 <p className="text-danger">{errors.descripcion}</p>
               )}
@@ -159,8 +155,6 @@ const PeriodoUpdate = () => {
         </div>
       </div>
     </div>
-
   );
 };
-
 export default PeriodoUpdate;
