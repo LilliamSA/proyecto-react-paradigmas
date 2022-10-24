@@ -36,7 +36,7 @@ class PersonaService {
     return http.get(`/persona/${id}`);
   }
 
-  deleteVerificar = (id) => {
+  deletePersona = (id) => {
     return http.delete(`/persona/${id}`);
   }
 

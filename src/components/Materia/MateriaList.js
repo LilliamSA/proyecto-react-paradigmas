@@ -23,17 +23,22 @@ const MateriaList = () => {
     };
 
     const deleteMateria = (id) => {
-        if (window.confirm("¿Está seguro que desea eliminar esta materia?")) {
-            MateriaDataService.delete(id)
+           //poner alerta de confirmacion y error en caso de que no se pueda eliminar
+           if (window.confirm("¿Está seguro de eliminar la materia?")) {
+            MateriaDataService.deleteMateria(id)
             .then(response => {
                 console.log(response.data);
                 retrieveMaterias();
+                alert("Materia eliminada con éxito");
             })
             .catch(e => {
                 console.log(e);
+                alert("No se pudo eliminar la materia, verifique que no tenga matriculas asociadas");
             });
         }
+
     };
+        
 
     //tabla de materias
     return (

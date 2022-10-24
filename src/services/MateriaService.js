@@ -44,6 +44,10 @@ class MateriaService {
         return http.get(`/materia?id=${id}`);
     }
 
+    deleteMateria = (id) => {
+        return http.delete(`/materia/${id}`);
+    }
+
 
 }
 

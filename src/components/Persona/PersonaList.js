@@ -29,7 +29,7 @@ const PersonaList = (props) => {
     //remove persona by id con mensaje de confirmacion
     const deletePersona = (id) => {
         if (window.confirm("¿Está seguro que desea eliminar esta persona?")) {
-            PersonaDataService.deleteVerificar(id)
+            PersonaDataService.deletePersona(id)
             .then(response => {
                 console.log(response.data);
                 retrievePersonas();
@@ -37,7 +37,7 @@ const PersonaList = (props) => {
             })
             .catch(e => {
                 console.log(e);
-                alert("No se pudo eliminar la persona");
+                alert("No se pudo eliminar la persona, verifique que no tenga matriculas asociadas");
             });
         }
     };
