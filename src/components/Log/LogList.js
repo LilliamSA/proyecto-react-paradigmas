@@ -24,30 +24,32 @@ const LogList = () => {
 
   return (
     //una tabla con los datos de la base de datos
-    <div className="list row">
-      <div className="col-md-6">
-        <h4>Logs List</h4>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Metodo</th>
-              <th>Fecha</th>
-              <th>Transacción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {logs &&
-              logs.map((log, index) => (
-                <tr key={index}>
-                  <td>{log.id}</td>
-                  <td>{log.metodo}</td>
-                  <td>{log.fecha}</td>
-                  <td>{log.transaccion}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+    <div className="container mt-5">
+      <h2 className="text-center mb-5">Lista de logs</h2>
+      <div className="list row justify-content-center">
+        <div className="col-md-6">
+          <table className="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Metodo</th>
+                <th>Fecha</th>
+                <th>Transacción para</th>
+              </tr>
+            </thead>
+            <tbody>
+              {logs &&
+                logs.map((log, index) => (
+                  <tr key={index}>
+                    <td>{log.id}</td>
+                    <td>{log.metodo}</td>
+                    <td>{log.fecha}</td>
+                    <td>{log.transaccion}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
