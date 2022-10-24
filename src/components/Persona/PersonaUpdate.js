@@ -87,7 +87,7 @@ const PersonaUpdate = () => {
     }
     return true;
   };
-  
+
   const updatePersona = () => {
     reset();
     var data = {
@@ -112,63 +112,80 @@ const PersonaUpdate = () => {
   };
 
   return (
-    <>
-      <div className="submit-form">
-        <div className="form-group">
-          <label htmlFor="identificacion">Identificación</label>
-          <input
-            type="text"
-            className="form-control"
-            id="identificacion"
-            required
-            value={identificacion}
-            onChange={(e) => setIdentificacion(e.target.value)}
-            name="identificacion"
-            onBlur={() => setErrors(validacionesForm())}
-          />
-          {errors.identificacion && (
-            <p className="text-danger">{errors.identificacion}</p>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="nombre">Nombre</label>
-          <input
-            type="text"
-            className="form-control"
-            id="nombre"
-            required
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            name="nombre"
-            onBlur={() => setErrors(validacionesForm())}
-          />
-          {errors.nombre && <p className="text-danger">{errors.nombre}</p>}
-        </div>
-        <button onClick={updatePersona} className="btn btn-success">
-          Actualizar
-        </button>
-      </div>
-      {success && (
-        <div className="alert alert-success" role="alert">
-          Persona actualizada correctamente
-          <br />
-          <button onClick={home} className="btn btn-warning">
-            Volver
-          </button>
-        </div>
-      )}
-      {err && (
-        <div className="alert alert-danger" role="alert">
-          Error al actualizar persona
-        </div>
-      )}
-      {input && (
-        <div className="alert alert-danger" role="alert">
-          Por favor ingrese todos los campos
-        </div>
-      )}
 
-    </>
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">Formulario para actualizar una persona</h1>
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="submit-form">
+            <div className="submit-form">
+              <div className="form-group">
+                <label htmlFor="identificacion">Identificación</label>
+                <input
+                  type="text"
+                  className="form-control mb-2 mt-2"
+                  id="identificacion"
+                  required
+                  value={identificacion}
+                  onChange={(e) => setIdentificacion(e.target.value)}
+                  name="identificacion"
+                  onBlur={() => setErrors(validacionesForm())}
+                />
+                {errors.identificacion && (
+                  <p className="text-danger">{errors.identificacion}</p>
+                )}
+              </div>
+              <div className="form-group">
+                <label htmlFor="nombre">Nombre</label>
+                <input
+                  type="text"
+                  className="form-control mb-2 mt-2"
+                  id="nombre"
+                  required
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  name="nombre"
+                  onBlur={() => setErrors(validacionesForm())}
+                />
+                {errors.nombre && <p className="text-danger">{errors.nombre}</p>}
+              </div>
+            </div>
+
+          </div>
+          <div className="row justify-content-center mt-4 mb-4">
+            <div className="col-md-6 text-center">
+              <button onClick={updatePersona} className="btn btn-success btn-lg">
+                Actualizar
+              </button>
+            </div>
+          </div>
+          <div className="row justify-content-center mt-4 mb-4">
+            <div className="col-md-6 text-center">
+              {success && (
+                <div className="alert alert-success text-center" role="alert">
+                  Persona actualizada correctamente
+                  <br />
+                  <button onClick={home} className="btn btn-warning">
+                    Volver
+                  </button>
+                </div>
+              )}
+              {err && (
+                <div className="alert alert-danger text-center" role="alert">
+                  Error al actualizar persona
+                </div>
+              )}
+              {input && (
+                <div className="alert alert-danger text-center" role="alert">
+                  Por favor ingrese todos los campos
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   );
 };
 
