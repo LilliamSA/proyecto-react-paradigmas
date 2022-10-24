@@ -4,35 +4,35 @@ class MateriaService {
     getAll() {
         return http.get('/materia');
     }
-    
+
     get(id) {
         return http.get(`/materia/${id}`);
     }
-    
+
     create(data) {
         return http.post('/materia', data);
     }
     edit(id) {
         return http.get(`/materia/${id}`);
     }
-    
+
     update(id, data) {
         return http.put(`/materia/${id}`, data);
     }
-    
+
     delete(id) {
         return http.delete(`/materia/${id}`);
     }
-    
+
     deleteAll() {
         return http.delete(`/materia`);
     }
-    
+
     findByTitle(title) {
         return http.get(`/materia?title=${title}`);
     }
 
-   findAllByPeriodoId(idPeriodo) {
+    findAllByPeriodoId(idPeriodo) {
         return http.get(`/materia/periodo/${idPeriodo}`);
     }
 
@@ -45,7 +45,7 @@ class MateriaService {
     }
 
     deleteMateria = (id) => {
-        return http.delete(`/materia/${id}`);
+        return http.delete(`/materia/verificar/${id}`);
     }
 
 

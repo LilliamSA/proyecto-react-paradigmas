@@ -37,7 +37,8 @@ class PeriodoService {
     }
 
     deletePeriodo = (id) => {
-        return http.delete(`/periodo/${id}`);}
+        return http.delete(`/periodo/verificar/${id}`);
+    }
 }
 
 
