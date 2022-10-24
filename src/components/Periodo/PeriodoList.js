@@ -13,38 +13,38 @@ const PeriodoList = () => {
     //obtener todas los periodos
     const retrievePeriodos = () => {
         PeriodoDataService.getAll()
-        .then(response => {
-            setPeriodos(response.data);
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
+            .then(response => {
+                setPeriodos(response.data);
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
     };
 
     //eliminar un periodo por id dando alerta de confirmacion y error
     const deletePeriodo = (id) => {
         if (window.confirm("¿Está seguro de eliminar el periodo?")) {
             PeriodoDataService.deletePeriodo(id)
-            .then(response => {
-                console.log(response.data);
-                retrievePeriodos();
-                alert("Periodo eliminado con éxito");
-            })
-            .catch(e => {
-                console.log(e);
-                alert("No se pudo eliminar el periodo, verifique que no tenga materias asociadas");
-            });
+                .then(response => {
+                    console.log(response.data);
+                    retrievePeriodos();
+                    alert("Periodo eliminado con éxito");
+                })
+                .catch(e => {
+                    console.log(e);
+                    alert("No se pudo eliminar el periodo, verifique que no tenga materias asociadas");
+                });
         }
 
     };
-          
+
 
     return (
-        <div className="container">
-            <div className="list row">
+        <div className="container mt-5">
+            <h2 className="text-center mb-5">Lista de periodos</h2>
+            <div className="list row justify-content-center">
                 <div className="col-md-12">
-                    <h4>Lista de periodos</h4>
                     <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
