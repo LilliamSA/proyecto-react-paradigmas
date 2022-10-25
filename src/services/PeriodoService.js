@@ -1,45 +1,51 @@
-import http from '../http-common';
+import http from "../http-common";
 
-class PeriodoService {
-    getAll() {
-        return http.get('/periodo');
-    }
+const getAll = () => {
+  return http.get("/periodo");
+};
 
-    get(id) {
-        return http.get(`/periodo/${id}`);
-    }
+const get = (id) => {
+  return http.get(`/periodo/${id}`);
+};
 
-    create(data) {
-        return http.post('/periodo', data);
-    }
-    edit(id) {
-        return http.get(`/periodo/${id}`);
-    }
+const create = (data) => {
+  return http.post("/periodo", data);
+};
 
-    update(id, data) {
-        return http.put(`/periodo/${id}`, data);
-    }
+const edit = (id) => {
+  return http.get(`/periodo?id=${id}`);
+};
 
-    delete(id) {
-        return http.delete(`/periodo/${id}`);
-    }
+const update = (id, data) => {
+  return http.put(`/periodo/${id}`, data);
+};
 
-    deleteAll() {
-        return http.delete(`/periodo`);
-    }
+const deleteAll = () => {
+  return http.delete(`/periodo`);
+};
 
-    findByTitle(title) {
-        return http.get(`/periodo?title=${title}`);
-    }
+const findByTitle = (title) => {
+  return http.get(`/periodo?title=${title}`);
+};
 
-    findById(id) {
-        return http.get(`/periodo/${id}`);
-    }
+const findById = (id) => {
+  return http.get(`/periodo/${id}`);
+};
 
-    deletePeriodo = (id) => {
-        return http.delete(`/periodo/verificar/${id}`);
-    }
-}
+const deletePeriodo = (id) => {
+  return http.delete(`/periodo/verificar/${id}`);
+};
 
+const PeriodoService = {
+  getAll,
+  get,
+  create,
+  edit,
+  update,
+  deleteAll,
+  findByTitle,
+  findById,
+  deletePeriodo,
+};
 
-export default new PeriodoService();
+export default PeriodoService;

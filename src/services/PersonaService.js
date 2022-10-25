@@ -1,45 +1,51 @@
 import http from '../http-common';
 
-class PersonaService {
-  getAll() {
+
+ const getAll=() => {
     return http.get('/persona');
   }
 
-  get(id) {
+  const get=(id) => {
     return http.get(`/persona/${id}`);
   }
 
-  create(data) {
-    return http.post('/persona', data);
+  const create=(data) => {
+      return http.post('/persona', data);
   }
-  edit(id) {
+ const edit=(id) =>{
     return http.get(`/persona?id=${id}`);
   }
 
-  update(id, data) {
+ const update=(id, data)=>{ 
     return http.put(`/persona/ ${id}`, data);
   }
 
-  delete(id) {
-    return http.delete(`/persona/${id}`);
-  }
-
-  deleteAll() {
+const  deleteAll=()=> {
     return http.delete(`/persona`);
   }
 
-  findByTitle(title) {
+ const findByTitle=(title)=> {
     return http.get(`/persona?title=${title}`);
   }
 
-  findById(id) {
+  const findById=(id)=> {
     return http.get(`/persona/${id}`);
   }
 
-  deletePersona = (id) => {
+  const deletePersona = (id) => {
     return http.delete(`/persona/verificar/${id}`);
   }
 
-}
+const PersonaService = {
+    getAll,
+    get,
+    create,
+    edit,
+    update,
+    deleteAll,
+    findByTitle,
+    findById,
+    deletePersona
+  };
 
-export default new PersonaService();
+export default PersonaService;

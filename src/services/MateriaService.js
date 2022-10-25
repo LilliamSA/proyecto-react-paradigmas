@@ -1,54 +1,60 @@
-import http from '../http-common';
+import http from "../http-common";
 
-class MateriaService {
-    getAll() {
-        return http.get('/materia');
-    }
+const getAll = () => {
+  return http.get("/materia");
+};
 
-    get(id) {
-        return http.get(`/materia/${id}`);
-    }
+const get = (id) => {
+  return http.get(`/materia/${id}`);
+};
 
-    create(data) {
-        return http.post('/materia', data);
-    }
-    edit(id) {
-        return http.get(`/materia/${id}`);
-    }
+const create = (data) => {
+  return http.post("/materia", data);
+};
+const edit = (id) => {
+  return http.get(`/materia/${id}`);
+};
 
-    update(id, data) {
-        return http.put(`/materia/${id}`, data);
-    }
+const update = (id, data) => {
+  return http.put(`/materia/${id}`, data);
+};
 
-    delete(id) {
-        return http.delete(`/materia/${id}`);
-    }
+const deleteAll = () => {
+  return http.delete(`/materia`);
+};
 
-    deleteAll() {
-        return http.delete(`/materia`);
-    }
+const findByTitle = (title) => {
+  return http.get(`/materia?title=${title}`);
+};
 
-    findByTitle(title) {
-        return http.get(`/materia?title=${title}`);
-    }
+const findAllByPeriodoId = (idPeriodo) => {
+  return http.get(`/materia/periodo/${idPeriodo}`);
+};
 
-    findAllByPeriodoId(idPeriodo) {
-        return http.get(`/materia/periodo/${idPeriodo}`);
-    }
+const findCuposById = (id) => {
+  return http.get(`/materia/cupos/${id}`);
+};
 
-    findCuposById(id) {
-        return http.get(`/materia/cupos/${id}`);
-    }
+const findById = (id) => {
+  return http.get(`/materia?id=${id}`);
+};
 
-    findById(id) {
-        return http.get(`/materia?id=${id}`);
-    }
+const deleteMateria = (id) => {
+  return http.delete(`/materia/verificar/${id}`);
+};
 
-    deleteMateria = (id) => {
-        return http.delete(`/materia/verificar/${id}`);
-    }
+const MateriaService = {
+  getAll,
+  get,
+  create,
+  edit,
+  update,
+  deleteAll,
+  findByTitle,
+  findAllByPeriodoId,
+  findCuposById,
+  findById,
+  deleteMateria,
+};
 
-
-}
-
-export default new MateriaService();
+export default MateriaService;
