@@ -4,17 +4,19 @@ import ReactPaginate from 'react-paginate';
 //crear una tabla
 const LogList = () => {
   const [logs, setLogs] = useState([]);
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0); //sirve para la paginacion de la tabla de logs 
 
  
-  const logsPerPage = 8;
-  const pagesVisited = pageNumber * logsPerPage;
+  const logsPerPage = 8;//asigna el numero de logs que se mostraran por pagina
+  const pagesVisited = pageNumber * logsPerPage; //hace la multiplicacion para saber cuantos logs se mostraran por pagina
 
-  const displayLogs = logs
-    .slice(pagesVisited, pagesVisited + logsPerPage)
-    .map((log) => {
+  const displayLogs = logs //se crea una variable para mostrar los logs
+  //pagesVisited es para que se muestren los logs de la pagina anterior
+  //pagesVisited+logsPerPage es para que se muestren los logs de la pagina siguiente
+    .slice(pagesVisited, pagesVisited + logsPerPage)//el slice
+    .map((log) => {//se crea un map para mostrar los logs
       return (
-        <tr key={log.id}>
+        <tr key={log.id}> 
           <td>{log.id}</td>
           <td>{log.fecha}</td>
           <td>{log.metodo}</td>
@@ -24,10 +26,11 @@ const LogList = () => {
     }
   );
 
+  //se crea una variable para saber cuantas paginas se necesitan para mostrar todos los logs
   const pageCount = Math.ceil(logs.length / logsPerPage);
 
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
+  const changePage = ({ selected }) => {//se crea una funcion para cambiar de pagina
+    setPageNumber(selected);//se asigna el numero de pagina
   }
 
   useEffect(() => {
@@ -66,14 +69,14 @@ const LogList = () => {
           </table>
           <ReactPaginate className="pagination 
           justify-content-center"
-            previousLabel={"Anterior"}
-            nextLabel={"Siguiente"}
-            pageCount={pageCount}
-            onPageChange={changePage}
-            containerClassName={"paginationBttns"}
-            previousLinkClassName={"previousBttn"}
-            nextLinkClassName={"nextBttn"}
-            disabledClassName={"paginationDisabled"}
+            previousLabel={"Anterior"} //texto del boton anterior
+            nextLabel={"Siguiente"} //texto del boton siguiente
+            pageCount={pageCount} //numero de paginas
+            onPageChange={changePage} //funcion para cambiar de pagina
+            containerClassName={"paginationBttns"}//clase para los botones de paginacion
+            previousLinkClassName={"previousBttn"}//clase para el boton anterior
+            nextLinkClassName={"nextBttn"}//clase para el boton siguiente
+            disabledClassName={"paginationDisabled"}//clase para deshabilitar el boton
             activeClassName={"paginationActive"}
           />
         </div>

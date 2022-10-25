@@ -51,7 +51,7 @@ const MateriaList = () => {
             <thead>
               <tr>
                 <th>Id</th>
-                <th>Asignatura</th>
+                <th>Materia</th>
                 <th>Cupos</th>
                 <th>Periodo</th>
                 <th>Editar</th>

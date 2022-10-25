@@ -127,7 +127,7 @@ const MateriaAdd = () => {
         <div className="col-md-6">
           <div className="submit-form"></div>
           <div className="form-group">
-            <label htmlFor="descripcion">Descripcion</label>
+            <label htmlFor="descripcion">Materia</label>
             <input
               type="text"
               className="form-control mt-2 mb-2"
