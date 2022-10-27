@@ -23,7 +23,7 @@ const MatriculaAdd = () => {
 
   const deleteMatricula = (id) => {
     if (window.confirm("¿Está seguro que desea eliminar esta matricula?")) {
-      MatriculaDataService.delete(id)
+      MatriculaDataService.deleteMatricula(id)
         .then((response) => {
           console.log(response.data);
           retrieveMatriculas();

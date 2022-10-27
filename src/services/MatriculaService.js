@@ -25,7 +25,7 @@ const deleteAll = () => {
 };
 
 const deleteMatricula = (id) => {
-  return http.delete(`/matricula/verificar/${id}`);
+  return http.delete(`/matricula/${id}`);
 };
 
 const MatriculaService = {
